@@ -14,7 +14,7 @@ export async function createUser(user: UserType) {
 
 export async function loginUser(user: SignInParams) {
     const userInfo = await validateInfo(user);
-    const token = jwt.sign({ id: userInfo.id}, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: userInfo.id}, process.env.JWT_SECRET);
     await createSession(userInfo.id, token);
 
     const info = {
