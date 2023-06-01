@@ -17,7 +17,14 @@ export async function loginUser(user: SignInParams) {
     const token = jwt.sign({ id: userInfo.id}, process.env.JWT_SECRET);
     await createSession(userInfo.id, token);
 
-    return token;
+    const info = {
+        userId: userInfo.id,
+        image: userInfo.image,
+        email: userInfo.email,
+        name: userInfo.name,
+        birthday: userInfo.birthday
+    }
+    return { info, token };
 }
 
 async function validateInfo(user: SignInParams) {
