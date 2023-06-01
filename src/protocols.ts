@@ -1,3 +1,4 @@
+import { Users } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 
 export type Error = {
@@ -17,3 +18,5 @@ export type SignInParams = {
   email: string;
   password: string;
 };
+
+export type UserType = Users;
