@@ -1,13 +1,13 @@
-import { Error } from "@/protocols";
+import { Error } from '../protocols';
 
 export function invalidDataError(details: string[]): invalidError {
-    return {
-        name: 'InvalidDataError',
-        message: 'Invalid data',
-        details,
-    };
+  return {
+    name: 'InvalidDataError',
+    message: 'Invalid data',
+    details,
+  };
 }
 
 type invalidError = Error & {
-    details: string[];
-}
+  details: string[];
+};

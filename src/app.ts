@@ -3,6 +3,7 @@ import 'express-async-errors';
 import express, { Express, json } from 'express';
 import cors from 'cors';
 import { connectDb, disconnectDB, loadEnv } from './config';
+import { handleErrors } from './middlewares';
 
 loadEnv();
 
@@ -11,7 +12,7 @@ app
   .use(cors())
   .use(json())
   .get('/health', (_req, res) => res.send('OK!'))
-
+  .use(handleErrors);
 
 export function init(): Promise<Express> {
   connectDb();
@@ -21,6 +22,5 @@ export function init(): Promise<Express> {
 export async function close(): Promise<void> {
   await disconnectDB();
 }
-
 
 export default app;
