@@ -1,5 +1,5 @@
-import { createUser } from "../services";
-import { UserType } from "../protocols";
+import { createUser, loginUser } from "../services";
+import { UserType, SignInParams } from "../protocols";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
@@ -7,10 +7,19 @@ export async function singUp(req: Request, res: Response, next: NextFunction) {
     const user = req.body as UserType;
     try {
         await createUser(user);
-        return res.status(httpStatus.OK).send('User created successfully!')
+        return res.status(httpStatus.CREATED).send('User created successfully!')
         
     } catch (e) {
-        if(e.name === 'DuplicatedEmailError') return res.sendStatus(httpStatus.UNAUTHORIZED);
+        next(e);
+    }
+}
+
+export async function signIn(req: Request, res: Response, next: NextFunction) {
+    const user = req.body as SignInParams;
+    try {
+        const token = await loginUser(user);
+        return res.status(httpStatus.OK).send({ token });
+    } catch (e) {
         next(e);
     }
 }

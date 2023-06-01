@@ -28,3 +28,18 @@ export async function singUp(user: UserType, hashedPassword: string) {
     }
   })
 }
+
+export async function createSession(userId: number, token: string) {
+  await prisma.sessions.deleteMany({
+    where: {
+      userId,
+    }
+  });
+  return await prisma.sessions.createMany({
+    data: {
+      userId,
+      token,
+      createdAt: new Date()
+    }
+  })
+}

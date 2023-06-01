@@ -10,6 +10,9 @@ export function handleErrors(err: Error, req: Request, res: Response, _next: Nex
   if (err.name === 'UnauthorizedError' || err.name === 'DuplicatedEmailError') {
     return res.status(httpStatus.UNAUTHORIZED).send({ message: err.message });
   }
+  if (err.name === 'NotFoundUserError' || err.name === 'NotFoundError') {
+    return res.status(httpStatus.NOT_FOUND).send({ message: err.message });
+  }
 
   return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
     error: 'InternalServerError',
