@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export type Error = {
     name: string;
@@ -10,3 +10,9 @@ export type JWT = {
 }
 
 export type AuthenticatedRequest = Request & JWT;
+
+export type validationMiddleware = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => void;

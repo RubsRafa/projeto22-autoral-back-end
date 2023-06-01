@@ -3,6 +3,10 @@ import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
 export function handleErrors(err: Error, req: Request, res: Response, next: NextFunction) {
+    if (err.name === "InvalidDataError") {
+        return res.status(httpStatus.BAD_REQUEST).send({ message: err.message });
+    }
+    
     if (err.name === "UnauthorizedError") {
         return res.status(httpStatus.UNAUTHORIZED).send({ message: err.message });
     }
