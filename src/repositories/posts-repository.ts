@@ -57,6 +57,9 @@ export async function getAllPosts() {
                     }
                 }
             }
+        },
+        orderBy: {
+            updatedAt: 'desc'
         }
     })
 }
