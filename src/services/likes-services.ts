@@ -13,7 +13,7 @@ export async function removeLike(userId: number, postId: number) {
 
     const likesPost = await findLikeByPost(postId);
     const like = likesPost.find((l) => {
-        if(l.userId === userId) return l
+        if(l.userId === userId) return l;
     });
 
     await dislike(like.id);
