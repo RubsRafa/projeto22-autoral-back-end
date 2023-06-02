@@ -4,7 +4,7 @@ import express, { Express, json } from 'express';
 import cors from 'cors';
 import { connectDb, disconnectDB, loadEnv } from './config';
 import { handleErrors } from './middlewares';
-import { authRouter, likesRouter, postsRouter } from './routers';
+import { authRouter, commentsRouter, likesRouter, postsRouter } from './routers';
 
 loadEnv();
 
@@ -16,6 +16,7 @@ app
   .use('/auth', authRouter)
   .use('/posts', postsRouter)
   .use('/like', likesRouter)
+  .use('/comment', commentsRouter)
   .use(handleErrors);
 
 export function init(): Promise<Express> {

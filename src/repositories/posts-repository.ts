@@ -33,6 +33,7 @@ export async function getAllPosts() {
                     postId: true,
                     createdAt: true,
                     updatedAt: true,
+                    comment: true,
                     Users: {
                         select: {
                             id: true,

@@ -26,3 +26,8 @@ export type PostParams = Omit<Posts, 'id'|'userId'|'createdAt'|'updatedAt'>
 export type PostId = {
   postId: number;
 }
+
+export type CommentParams = {
+  comment: string;
+  postId: number;
+}
