@@ -35,11 +35,18 @@ export async function createSession(userId: number, token: string) {
       userId,
     }
   });
-  return await prisma.sessions.createMany({
+  return await prisma.sessions.create({
     data: {
       userId,
       token,
-      createdAt: new Date()
+    }
+  })
+}
+
+export async function findUserById(id: number) {
+  return await prisma.users.findUnique({
+    where: {
+      id,
     }
   })
 }
