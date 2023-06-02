@@ -22,3 +22,7 @@ export type SignInParams = {
 export type UserType = Users;
 
 export type PostParams = Omit<Posts, 'id'|'userId'|'createdAt'|'updatedAt'>
+
+export type PostId = {
+  postId: number;
+}
