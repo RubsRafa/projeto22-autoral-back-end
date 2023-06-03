@@ -1,5 +1,5 @@
 import { conflictError, notFoundError, notFoundUserError } from "../errors";
-import { dislike, findLikeByPost, findPostById, findUserById, like } from "../repositories";
+import { dislike, findLikeByPost, findPostById, findUserById, getLikesUser, like } from "../repositories";
 
 export async function addLike(userId: number, postId: number) {
     await verifyInfo(userId, postId);
@@ -37,4 +37,13 @@ async function verifyInfo(userId: number, postId: number){
     if(!postExist) throw notFoundError();
     
     return;
+}
+
+export async function getLikesService(userId: number) {
+    const likes = await getLikesUser(userId);
+    const arrayPostId: number[] = [];
+    likes.forEach((p) => {
+        arrayPostId.push(p.postId);
+    })
+    return arrayPostId;
 }

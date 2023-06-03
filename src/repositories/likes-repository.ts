@@ -32,3 +32,11 @@ export async function dislike(id: number) {
         }
     })
 }
+
+export async function getLikesUser(userId: number){
+    return await prisma.likes.findMany({
+        where: {
+            userId,
+        },
+    })
+}
