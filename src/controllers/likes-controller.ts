@@ -27,10 +27,8 @@ export async function dislikePost(req: AuthenticatedRequest, res: Response, next
 
 export async function getLikes(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const { userId } = req as JWT;
-    console.log(userId)
     try {
         const userLikes = await getLikesService(userId);
-        console.log(userLikes)
         return res.status(httpStatus.OK).send(userLikes);
     } catch (e) {
         next(e);

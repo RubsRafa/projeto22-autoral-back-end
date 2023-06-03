@@ -1,4 +1,4 @@
-import { UserType } from '@/protocols';
+import { UserType } from '../protocols';
 import { prisma } from '../config';
 
 export async function findSession(token: string) {

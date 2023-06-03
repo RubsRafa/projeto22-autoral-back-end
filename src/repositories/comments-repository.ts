@@ -25,3 +25,17 @@ export async function removeComment(id: number) {
         }
     })
 }
+
+export async function getAllComments() {
+    return await prisma.comments.findMany({
+        include: {
+            Users: {
+                select: {
+                    id: true,
+                    name: true,
+                    image: true,
+                }
+            },
+        }
+    });
+}

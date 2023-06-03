@@ -1,5 +1,5 @@
 import { notFoundError, notFoundUserError } from "../errors";
-import { addComment, findComment, findPostById, findUserById, removeComment } from "../repositories";
+import { addComment, findComment, findPostById, findUserById, getAllComments, removeComment } from "../repositories";
 
 export async function addCommentService(userId: number, postId: number, comment: string) {
     await verifyInfo(userId, postId);
@@ -26,4 +26,9 @@ async function verifyInfo(userId: number, postId: number){
     if(!postExist) throw notFoundError();
     
     return;
+}
+
+export async function getComments () {
+    const comments = await getAllComments();
+    return comments;
 }
