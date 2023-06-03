@@ -29,7 +29,10 @@ export async function getPostsService() {
                     Users: post.Users,
                     Likes: post.Likes,
                     Comments: post.Comments,
-                    Reposts: post.Reposts
+                    Reposts: post.Reposts,
+                    repostedById: repost.userId,
+                    repostedByName: repost.Users.name,
+                    repostedByImage: repost.Users.image,
                 })
             }
         }

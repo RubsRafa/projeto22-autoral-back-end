@@ -31,3 +31,7 @@ export type CommentParams = {
   comment: string;
   postId: number;
 }
+
+export type invalidError = Error & {
+  details: string[];
+};

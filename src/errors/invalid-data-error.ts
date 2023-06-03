@@ -1,4 +1,4 @@
-import { Error } from '../protocols';
+import { invalidError } from '../protocols';
 
 export function invalidDataError(details: string[]): invalidError {
   return {
@@ -7,7 +7,3 @@ export function invalidDataError(details: string[]): invalidError {
     details,
   };
 }
-
-type invalidError = Error & {
-  details: string[];
-};

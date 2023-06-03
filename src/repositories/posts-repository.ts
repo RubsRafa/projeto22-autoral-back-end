@@ -1,4 +1,4 @@
-import { PostParams } from "@/protocols";
+import { PostParams } from "../protocols";
 import { prisma } from "../config";
 
 export async function getAllPosts() {
@@ -25,6 +25,7 @@ export async function getAllPosts() {
                     },
                     id: true,
                     postId: true,
+                    userId: true,
                 }
             },
             Comments: {

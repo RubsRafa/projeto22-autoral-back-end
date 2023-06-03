@@ -26,5 +26,15 @@ export async function findRepostIdByPostId(postId: number) {
 }
 
 export async function getAllReposts() {
-    return await prisma.reposts.findMany({});
+    return await prisma.reposts.findMany({
+        include: {
+            Users: {
+                select:{
+                    id: true,
+                    name: true,
+                    image: true,
+                }
+            }
+        }
+    });
 }
