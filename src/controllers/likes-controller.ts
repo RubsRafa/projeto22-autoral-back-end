@@ -1,4 +1,4 @@
-import { addLike, getLikesService, removeLike } from "../services";
+import { addLike, getAllLikesService, getLikesService, removeLike } from "../services";
 import { AuthenticatedRequest, JWT, PostId } from "../protocols";
 import { NextFunction, Response } from "express";
 import httpStatus from "http-status";
@@ -30,6 +30,15 @@ export async function getLikes(req: AuthenticatedRequest, res: Response, next: N
     try {
         const userLikes = await getLikesService(userId);
         return res.status(httpStatus.OK).send(userLikes);
+    } catch (e) {
+        next(e);
+    }
+}
+
+export async function getAllLikes(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    try {
+        const allLikes = await getAllLikesService();
+        return res.status(httpStatus.OK).send(allLikes);
     } catch (e) {
         next(e);
     }

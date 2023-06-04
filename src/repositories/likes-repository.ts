@@ -40,3 +40,17 @@ export async function getLikesUser(userId: number){
         },
     })
 }
+
+export async function getAllLikes() {
+    return await prisma.likes.findMany({
+        include: {
+            Users:{
+                select:{
+                    id: true,
+                    name: true,
+                    image: true,
+                }
+            }
+        }
+    });
+}
