@@ -38,3 +38,20 @@ export async function getAllReposts() {
         }
     });
 }
+
+export async function getAllUserReposts(userId: number) {
+    return await prisma.reposts.findMany({
+        where: {
+            userId,
+        },
+        include: {
+            Users: {
+                select:{
+                    id: true,
+                    name: true,
+                    image: true,
+                }
+            }
+        }
+    });
+}

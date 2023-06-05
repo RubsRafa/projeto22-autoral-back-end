@@ -1,5 +1,5 @@
 import { PostParams } from "../protocols";
-import { findUserById, getAllPosts, getAllReposts, post } from "../repositories";
+import { findUserById, getAllPosts, getAllReposts, getAllUserReposts, getAllUserPosts, post } from "../repositories";
 import { badRequestError, notFoundUserError } from "../errors";
 
 
@@ -59,4 +59,48 @@ export async function postPost(userId: number, body: PostParams) {
     if (!myPost) throw badRequestError();
 
     return myPost;
+}
+
+export async function getUserAllPosts(userId: number) {
+    const userExist = await findUserById(userId);
+    if(!userExist) throw notFoundUserError();
+
+    const userPosts = await getAllUserPosts(userId);
+    const userReposts = await getAllUserReposts(userId);
+
+    const allUserInfo = [];
+
+    for (let i = 0; i < userReposts.length; i++) {
+        let repost = userReposts[i];
+
+        for (let x = 0; x < userPosts.length; x++) {
+            let post = userPosts[x];
+            if (post.id === repost.postId) {
+                allUserInfo.push({
+                    id: post.id,
+                    userId: post.Users.id,
+                    type: post.PostType.id,
+                    video: post.video,
+                    image: post.image,
+                    text: post.text,
+                    isReposted: true,
+                    createdAt: repost.createdAt,
+                    updatedAt: repost.updatedAt,
+                    PostType: post.PostType,
+                    Users: post.Users,
+                    Likes: post.Likes,
+                    Comments: post.Comments,
+                    Reposts: post.Reposts,
+                    repostedById: repost.userId,
+                    repostedByName: repost.Users.name,
+                    repostedByImage: repost.Users.image,
+                })
+            }
+        }
+    }
+
+    const results = allUserInfo.concat(userPosts)
+    results.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+
+    return results;
 }

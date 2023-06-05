@@ -77,3 +77,71 @@ export async function post(userId: number, body: PostParams) {
         }
     })
 }
+
+export async function getAllUserPosts(userId: number) {
+    return await prisma.posts.findMany({
+        where:{
+            userId,
+        },
+        include: {
+            PostType: true,
+            Users: {
+                select: {
+                    id: true,
+                    name: true,
+                    image: true,
+                    birthday: true,
+                },
+            },
+            Likes: {
+                select: {
+                    Users: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                            birthday: true,
+                        },
+                    },
+                    id: true,
+                    postId: true,
+                    userId: true,
+                }
+            },
+            Comments: {
+                select: {
+                    id: true,
+                    postId: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    comment: true,
+                    Users: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                        }
+                    }
+                },
+            },
+            Reposts: {
+                select: {
+                    id: true,
+                    postId: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    Users: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                        }
+                    }
+                }
+            }
+        },
+        orderBy: {
+            updatedAt: 'desc'
+        }
+    })
+}
