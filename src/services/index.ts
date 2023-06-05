@@ -3,3 +3,4 @@ export * from './posts-services';
 export * from './likes-services';
 export * from './comments-services';
 export * from './reposts-services';
+export * from './users-services';
