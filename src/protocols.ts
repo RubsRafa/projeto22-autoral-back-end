@@ -1,4 +1,4 @@
-import { Posts, Users } from '@prisma/client';
+import { Follows, Posts, Users } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 
 export type Error = {
@@ -43,4 +43,16 @@ export type EditUserParams = {
   confirmPassword?: string|null;
   image?: string|null;
   birthday?: Date|null;
+}
+
+export type FollowParams = {
+  id: number;
+  userId: number;
+  userIdIFollow: number;
+  userName: string;
+  userImage: string;
+}
+
+export type FollowId = {
+  userIdIFollow: number;
 }

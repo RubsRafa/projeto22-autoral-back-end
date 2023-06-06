@@ -4,3 +4,4 @@ export * from './likes-repository';
 export * from './comments-repository';
 export * from './reposts-repository';
 export * from './users-repository';
+export * from './follows-repository';
