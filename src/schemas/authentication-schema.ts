@@ -11,5 +11,5 @@ export const signUpSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
   image: Joi.string().required(),
-  birthday: Joi.date(),
+  birthday: Joi.string().isoDate(),
 })

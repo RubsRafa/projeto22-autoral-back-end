@@ -35,3 +35,12 @@ export type CommentParams = {
 export type invalidError = Error & {
   details: string[];
 };
+
+export type EditUserParams = {
+  name?: string|null;
+  email?: string|null;
+  password?: string|null;
+  confirmPassword?: string|null;
+  image?: string|null;
+  birthday?: Date|null;
+}
