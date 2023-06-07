@@ -20,3 +20,19 @@ export async function createFollow(userId: number, userIdIFollow: number) {
         }
     })
 }
+
+export async function removeFollow(followId: number) {
+    return await prisma.follows.delete({
+        where: {
+            id: followId,
+        }
+    })
+}
+
+export async function findFollow(id: number) {
+    return await prisma.follows.findUnique({
+        where: {
+            id,
+        }
+    })
+}

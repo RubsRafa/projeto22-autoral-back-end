@@ -1,4 +1,4 @@
-import { followAnUser, getMyFollows } from "../controllers";
+import { followAnUser, getMyFollows, removeFollow } from "../controllers";
 import { authenticateToken } from "../middlewares";
 import { Router } from "express";
 
@@ -8,6 +8,7 @@ followsRouter
   .all('/*', authenticateToken)
   .get('/:userId', getMyFollows)
   .post('/', followAnUser)
+  .delete('/', removeFollow);
 
 export {
     followsRouter

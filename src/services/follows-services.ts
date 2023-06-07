@@ -1,6 +1,6 @@
-import { notFoundUserError } from "../errors";
+import { notFoundError, notFoundUserError } from "../errors";
 import { FollowParams } from "../protocols";
-import { createFollow, findUserById, getAllFollows, getAllUsers } from "../repositories";
+import { createFollow, findFollow, findUserById, getAllFollows, getAllUsers, removeFollow } from "../repositories";
 
 export async function findMyFollows(userId: number) {
     const myFollows = await getAllFollows(userId);
@@ -37,5 +37,16 @@ export async function followUser(userId: number, userIdIFollow: number) {
     if(!existUserFollowed) throw notFoundUserError();
 
     await createFollow(userId, userIdIFollow);
+    return;
+}
+
+export async function removeFollowService(userId: number, followId: number) {
+    const existUser = await findUserById(userId);
+    if(!existUser) throw notFoundUserError();
+
+    const followExist = await findFollow(followId);
+    if(!followExist) throw notFoundError();
+
+    await removeFollow(followId);
     return;
 }

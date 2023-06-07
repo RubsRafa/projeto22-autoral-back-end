@@ -54,5 +54,9 @@ export type FollowParams = {
 }
 
 export type FollowId = {
+  followId: number;
+}
+
+export type FollowIdUser = {
   userIdIFollow: number;
 }
