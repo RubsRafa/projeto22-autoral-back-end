@@ -22,13 +22,31 @@ export function bodyPost(type: number) {
 export function bodyPostWithNoText(type: number) {
     return {
         type,
-        text: '',
+        image: faker.image.avatar(),
+        video: faker.image.url(),
     }
 }
 
-export function postWithNoVideoAndNoImage(type: number) {
+export function bodyPostWithTextEmpty(type: number) {
     return {
         type,
-        text: faker.word.words(),
+        texy: '',
+        image: faker.image.avatar(),
+        video: faker.image.url(),
+    }
+}
+
+export function bodyEmpty(type: number) {
+    return {
+        type,
+        texy: '',
+        image: '',
+        video: '',
+    }
+}
+
+export function postWithNothing(type: number) {
+    return {
+        type,
     }
 }

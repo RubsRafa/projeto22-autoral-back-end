@@ -3,7 +3,7 @@ import { cleanDb, generateValidToken } from "../helpers";
 import supertest from "supertest";
 import httpStatus from "http-status";
 import { faker } from "@faker-js/faker";
-import { bodyPost, bodyPostWithNoText, createFollow, createPost, createUser, postWithNoVideoAndNoImage } from "../factories";
+import { bodyEmpty, bodyPost, bodyPostWithNoText, bodyPostWithTextEmpty, createFollow, createPost, createUser, postWithNothing } from "../factories";
 import * as jwt from "jsonwebtoken";
 
 beforeAll(async () => {
@@ -238,7 +238,23 @@ describe('POST /posts', () => {
             const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
             expect(response.status).toBe(httpStatus.BAD_REQUEST);
         })
-        it('should respond with status 400 if post has no text and is type 1', async () => {
+        it('should respond with status 400 if body is empty', async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const body = bodyEmpty(1);
+
+            const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
+            expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        })
+        it('should respond with status 400 if body is null', async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const body = {type: 1};
+
+            const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
+            expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        })
+        it('should respond with status 400 if post is type 1 but has no text', async () => {
             const user = await createUser();
             const token = await generateValidToken(user);
             const body = bodyPostWithNoText(1);
@@ -246,10 +262,18 @@ describe('POST /posts', () => {
             const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
             expect(response.status).toBe(httpStatus.BAD_REQUEST);
         })
+        it('should respond with status 400 if post is type 1 but has text is empty', async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const body = bodyPostWithTextEmpty(1);
+
+            const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
+            expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        })
         it('should respond with status 400 if post is type 2 but has no image', async () => {
             const user = await createUser();
             const token = await generateValidToken(user);
-            const body = postWithNoVideoAndNoImage(2);
+            const body = bodyPost(2);
 
             const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
             expect(response.status).toBe(httpStatus.BAD_REQUEST);
@@ -257,7 +281,7 @@ describe('POST /posts', () => {
         it('should respond with status 400 if post is type 3 but has no video', async () => {
             const user = await createUser();
             const token = await generateValidToken(user);
-            const body = postWithNoVideoAndNoImage(3);
+            const body = bodyPost(3);
 
             const response = await server.post('/posts').set('Authorization', `Bearer ${token}`).send(body);
             expect(response.status).toBe(httpStatus.BAD_REQUEST);
