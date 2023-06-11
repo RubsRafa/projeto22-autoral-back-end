@@ -1,9 +1,9 @@
 import { PostParams } from "../protocols";
-import { findUserById, getAllPosts, getAllReposts, getAllUserReposts, getAllUserPosts, post } from "../repositories";
+import { findUserById, getAllPosts, getAllReposts, getAllUserReposts, getAllUserPosts, post, getAllFollows } from "../repositories";
 import { badRequestError, notFoundUserError } from "../errors";
 
 
-export async function getPostsService() {
+export async function getPostsService(userId: number) {
     const posts = await getAllPosts();
     const reposts = await getAllReposts();
 
@@ -39,9 +39,38 @@ export async function getPostsService() {
     }
 
     const results = allInfo.concat(posts)
-    results.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
 
-    return results;
+    const myFollows = await getAllFollows(userId);
+    const filterPostsFromFollows = [];
+
+    if(myFollows.length === 0) {
+        for(let i = 0; i < results.length; i++) {
+            const post = results[i];
+            if((post.userId === userId) || (post.isReposted && post.repostedById === userId)) {
+                filterPostsFromFollows.push(post);
+            }
+        }
+    } else {
+        for(let i = 0; i < myFollows.length; i++) {
+            const follows = myFollows[i];
+
+            for(let x = 0; x <results.length;x++) {
+                const post = results[x];
+                if(
+                (post.userId === follows.userIdIFollow) ||
+                (post.userId === userId&& !post.isReposted) || 
+                (post.isReposted && post.repostedById === userId) ||
+                (post.isReposted && post.repostedById === follows.userIdIFollow)
+                ) {
+                    filterPostsFromFollows.push(post);
+                }
+            }
+        }
+    }
+
+    filterPostsFromFollows.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+
+    return filterPostsFromFollows;
 }
 
 export async function postPost(userId: number, body: PostParams) {

@@ -4,8 +4,9 @@ import { NextFunction, Response } from "express";
 import httpStatus from "http-status";
 
 export async function getPosts(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    const { userId } = req as JWT;
     try {
-        const posts = await getPostsService();
+        const posts = await getPostsService(userId);
         return res.status(httpStatus.OK).send(posts);
         
     } catch (e) {
