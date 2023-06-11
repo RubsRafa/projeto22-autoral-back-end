@@ -74,7 +74,6 @@ export async function getPostsService(userId: number) {
 }
 
 export async function postPost(userId: number, body: PostParams) {
-    console.log('chegou aqui')
     if (!body.text && !body.image && !body.video) throw badRequestError();
     if (body.text === '' && body.image === '' && body.video === '') throw badRequestError();
 

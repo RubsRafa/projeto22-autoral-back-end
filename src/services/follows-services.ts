@@ -6,7 +6,6 @@ export async function findMyFollows(userId: number) {
     const myFollows = await getAllFollows(userId);
     const allUsers = await getAllUsers();
 
-    console.log('aqui')
     const results: FollowParams[] = [];
     for (let i = 0; i < myFollows.length; i++) {
         let follow = myFollows[i];
