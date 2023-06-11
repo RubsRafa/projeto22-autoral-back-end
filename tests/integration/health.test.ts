@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import supertest from "supertest";
 
 beforeAll(async () => {
-    init();
+    await init();
 })
 
 const server = supertest(app);
