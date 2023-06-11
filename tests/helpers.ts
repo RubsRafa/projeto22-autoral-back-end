@@ -1,6 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { prisma } from '@/config';
 import { Users } from '@prisma/client';
+import { createSession, createUser } from './factories';
 
 export async function cleanDb() {
     await prisma.comments.deleteMany({});
@@ -12,6 +13,11 @@ export async function cleanDb() {
     await prisma.users.deleteMany({});
 }
 
-// export async function generateValidToken(user?: Users) {
-//     const incomingUser = user || ()
-// }
+export async function generateValidToken(user?: Users) {
+    const incomingUser = user || (await createUser());
+    const token = jwt.sign({ userId: incomingUser.id }, process.env.JWT_SECRET);
+  
+    await createSession(token);
+  
+    return token;
+  }
