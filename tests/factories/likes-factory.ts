@@ -1,26 +1,26 @@
-import { prisma } from "@/config";
-import { Posts, Users } from "@prisma/client";
+import { Posts, Users } from '@prisma/client';
+import { prisma } from '@/config';
 
 export async function createLike(user: Users, post: Posts) {
-    return await prisma.likes.create({
-        data: {
-            userId: user.id,
-            postId: post.id,
-        }
-    })
+  return await prisma.likes.create({
+    data: {
+      userId: user.id,
+      postId: post.id,
+    },
+  });
 }
 
 export function bodyLike(post?: Posts) {
-    return {
-        postId: post.id,
-    }
+  return {
+    postId: post.id,
+  };
 }
 
 export async function findLikeByUserAndPost(user: Users, post: Posts) {
-    return await prisma.likes.findMany({
-        where: {
-            userId: user.id,
-            postId: post.id
-        }
-    })
+  return await prisma.likes.findMany({
+    where: {
+      userId: user.id,
+      postId: post.id,
+    },
+  });
 }

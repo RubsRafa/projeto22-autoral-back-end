@@ -1,6 +1,6 @@
-import { dislikePost, getAllLikes, getLikes, likePost } from "../controllers";
-import { authenticateToken } from "../middlewares";
-import { Router } from "express";
+import { Router } from 'express';
+import { dislikePost, getAllLikes, getLikes, likePost } from '../controllers';
+import { authenticateToken } from '../middlewares';
 
 const likesRouter = Router();
 
@@ -9,8 +9,6 @@ likesRouter
   .get('/users', getAllLikes)
   .get('/', getLikes)
   .post('/', likePost)
-  .delete('/', dislikePost)
+  .delete('/', dislikePost);
 
-export {
-    likesRouter
-}
+export { likesRouter };

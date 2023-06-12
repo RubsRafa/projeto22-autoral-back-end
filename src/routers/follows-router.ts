@@ -1,6 +1,6 @@
-import { followAnUser, getMyFollows, removeFollow } from "../controllers";
-import { authenticateToken } from "../middlewares";
-import { Router } from "express";
+import { Router } from 'express';
+import { followAnUser, getMyFollows, removeFollow } from '../controllers';
+import { authenticateToken } from '../middlewares';
 
 const followsRouter = Router();
 
@@ -10,6 +10,4 @@ followsRouter
   .post('/', followAnUser)
   .delete('/', removeFollow);
 
-export {
-    followsRouter
-}
+export { followsRouter };

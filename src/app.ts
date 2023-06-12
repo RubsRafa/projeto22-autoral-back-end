@@ -4,7 +4,15 @@ import express, { Express, json } from 'express';
 import cors from 'cors';
 import { connectDb, disconnectDB, loadEnv } from './config';
 import { handleErrors } from './middlewares';
-import { authRouter, commentsRouter, followsRouter, likesRouter, postsRouter, repostsRouter, userRouter } from './routers';
+import {
+  authRouter,
+  commentsRouter,
+  followsRouter,
+  likesRouter,
+  postsRouter,
+  repostsRouter,
+  userRouter,
+} from './routers';
 
 loadEnv();
 

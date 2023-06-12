@@ -21,29 +21,29 @@ export type SignInParams = {
 
 export type UserType = Users;
 
-export type PostParams = Omit<Posts, 'id'|'userId'|'createdAt'|'updatedAt'>
+export type PostParams = Omit<Posts, 'id' | 'userId' | 'createdAt' | 'updatedAt'>;
 
 export type PostId = {
   postId: number;
-}
+};
 
 export type CommentParams = {
   comment: string;
   postId: number;
-}
+};
 
 export type invalidError = Error & {
   details: string[];
 };
 
 export type EditUserParams = {
-  name?: string|null;
-  email?: string|null;
-  password?: string|null;
-  confirmPassword?: string|null;
-  image?: string|null;
-  birthday?: Date|null;
-}
+  name?: string | null;
+  email?: string | null;
+  password?: string | null;
+  confirmPassword?: string | null;
+  image?: string | null;
+  birthday?: Date | null;
+};
 
 export type FollowParams = {
   id: number;
@@ -51,12 +51,12 @@ export type FollowParams = {
   userIdIFollow: number;
   userName: string;
   userImage: string;
-}
+};
 
 export type FollowId = {
   followId: number;
-}
+};
 
 export type FollowIdUser = {
   userIdIFollow: number;
-}
+};

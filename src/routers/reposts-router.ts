@@ -1,12 +1,9 @@
-import { addRepostPost, removeRepostPost } from "../controllers";
-import { authenticateToken } from "../middlewares";
-import { Router } from "express";
+import { Router } from 'express';
+import { addRepostPost, removeRepostPost } from '../controllers';
+import { authenticateToken } from '../middlewares';
 
 const repostsRouter = Router();
 
-repostsRouter
-  .all('/*', authenticateToken)
-  .post('/', addRepostPost)
-  .delete('/', removeRepostPost)
+repostsRouter.all('/*', authenticateToken).post('/', addRepostPost).delete('/', removeRepostPost);
 
-export { repostsRouter }
+export { repostsRouter };

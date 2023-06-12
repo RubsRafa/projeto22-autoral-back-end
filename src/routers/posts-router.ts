@@ -1,7 +1,7 @@
-import { authenticateToken, validateBody } from "../middlewares";
-import { getPosts, getUserPosts, postAPost } from "../controllers";
-import { Router } from "express";
-import { postsSchema } from "../schemas";
+import { Router } from 'express';
+import { authenticateToken, validateBody } from '../middlewares';
+import { getPosts, getUserPosts, postAPost } from '../controllers';
+import { postsSchema } from '../schemas';
 
 const postsRouter = Router();
 

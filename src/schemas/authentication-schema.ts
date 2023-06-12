@@ -12,4 +12,4 @@ export const signUpSchema = Joi.object({
   password: Joi.string().required(),
   image: Joi.string().required(),
   birthday: Joi.string().isoDate(),
-})
+});
