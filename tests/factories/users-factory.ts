@@ -28,13 +28,6 @@ export function bodyWrongPassword() {
     }
 }
 
-export function bodyUserForPassword(user: Users) {
-    return {
-        password: faker.internet.password(),
-        confirmPassword: user.password,
-    }
-}
-
 export function changeName() {
     return {
         name: faker.string.sample(),
@@ -53,25 +46,10 @@ export function changeBirthday() {
     }
 }
 
-export function changeEmailUser() {
-    return {
-        email: faker.string.sample(),
-    }
-}
-
 export async function findUserInfo(user: Users) {
     return await prisma.users.findFirst({
         where: {
             id: user.id
         }
     })
-}
-
-export async function createUserBody() {
-    return {
-        name: faker.string.sample(),
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        image: faker.internet.avatar(),
-    }
 }

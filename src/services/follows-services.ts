@@ -29,8 +29,6 @@ export async function findMyFollows(userId: number) {
 }
 
 export async function followUser(userId: number, userIdIFollow: number) {
-    const existUser = await findUserById(userId);
-    if(!existUser) throw notFoundUserError();
 
     const existUserFollowed = await findUserById(userIdIFollow);
     if(!existUserFollowed) throw notFoundUserError();
@@ -39,9 +37,7 @@ export async function followUser(userId: number, userIdIFollow: number) {
     return;
 }
 
-export async function removeFollowService(userId: number, followId: number) {
-    const existUser = await findUserById(userId);
-    if(!existUser) throw notFoundUserError();
+export async function removeFollowService(followId: number) {
 
     const followExist = await findFollow(followId);
     if(!followExist) throw notFoundError();

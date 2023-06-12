@@ -25,10 +25,10 @@ export async function followAnUser(req: AuthenticatedRequest, res: Response, nex
 }
 
 export async function removeFollow(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-    const { userId } = req as JWT;
+    // const { userId } = req as JWT;
     const { followId } = req.body as FollowId;
     try {
-        await removeFollowService(userId, followId);
+        await removeFollowService(followId);
         return res.sendStatus(httpStatus.OK);
     } catch (e) {
         next(e);

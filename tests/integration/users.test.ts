@@ -3,7 +3,7 @@ import { cleanDb, generateValidToken } from "../helpers";
 import supertest from "supertest";
 import httpStatus from "http-status";
 import { faker } from "@faker-js/faker";
-import { bodyUserForPassword, bodyWrongPassword, changeBirthday, changeEmailUser, changeImage, changeName, createUser, createUserBody, findUserInfo } from "../factories";
+import { bodyWrongPassword, changeBirthday, changeImage, changeName, createUser, findUserInfo } from "../factories";
 import * as jwt from 'jsonwebtoken';
 import { changeEmail } from "../factories";
 
