@@ -35,3 +35,11 @@ async function validateInfo(user: SignInParams) {
   if (!validPassword) throw notFoundUserError();
   return userExist;
 }
+
+const authService = {
+  createUser,
+  loginUser,
+  validateInfo,
+}
+
+export default authService;

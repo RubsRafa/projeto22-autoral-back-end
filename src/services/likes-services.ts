@@ -49,3 +49,13 @@ export async function getLikesService(userId: number) {
 export async function getAllLikesService() {
   return await getAllLikes();
 }
+
+const likesService = {
+  addLike,
+  removeLike,
+  verifyInfo,
+  getLikesService,
+  getAllLikesService,
+}
+
+export default likesService;

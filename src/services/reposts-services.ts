@@ -30,3 +30,11 @@ async function verifyInfo(postId: number) {
 
   return;
 }
+
+const repostsService = {
+  addRepostService,
+  removeRepostService,
+  verifyInfo,
+}
+
+export default repostsService;

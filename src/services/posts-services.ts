@@ -138,3 +138,11 @@ export async function getUserAllPosts(userId: number) {
 
   return results;
 }
+
+const postsService = {
+  getPostsService,
+  postPost,
+  getUserAllPosts,
+}
+
+export default postsService;

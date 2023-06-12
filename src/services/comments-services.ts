@@ -30,3 +30,12 @@ export async function getComments() {
   const comments = await getAllComments();
   return comments;
 }
+
+const commentsService = {
+  addCommentService,
+  removeCommentService,
+  verifyInfo,
+  getComments,
+}
+
+export default commentsService;

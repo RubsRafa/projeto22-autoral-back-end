@@ -40,3 +40,10 @@ export async function editUserService(userId: number, body: EditUserParams) {
 
   return await editUserInfo(userId, newBody);
 }
+
+const usersService = {
+  getUserInfoService,
+  editUserService,
+}
+
+export default usersService;

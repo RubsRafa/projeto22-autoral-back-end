@@ -43,3 +43,11 @@ export async function removeFollowService(followId: number) {
   await removeFollow(followId);
   return;
 }
+
+const followsService = {
+  findMyFollows,
+  followUser,
+  removeFollowService,
+}
+
+export default followsService;
