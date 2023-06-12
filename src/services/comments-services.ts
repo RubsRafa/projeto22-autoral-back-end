@@ -1,8 +1,8 @@
-import { notFoundError, notFoundUserError } from "../errors";
-import { addComment, findComment, findPostById, findUserById, getAllComments, removeComment } from "../repositories";
+import { conflictError, notFoundError } from "../errors";
+import { addComment, findComment, findPostById, getAllComments, removeComment } from "../repositories";
 
 export async function addCommentService(userId: number, postId: number, comment: string) {
-    await verifyInfo(userId, postId);
+    await verifyInfo(postId);
 
     await addComment(userId, postId, comment);
     return;
@@ -11,16 +11,16 @@ export async function addCommentService(userId: number, postId: number, comment:
 export async function removeCommentService(userId: number, commentId: number) {
 
     const commentPost = await findComment(commentId);
+    if(!commentPost) throw notFoundError();
 
-    verifyInfo(userId, commentPost.postId);
+    verifyInfo(commentPost.postId);
+    if(commentPost.userId !== userId) throw conflictError();
 
     await removeComment(commentId);
     return;
 }
 
-async function verifyInfo(userId: number, postId: number){
-    const userExist = await findUserById(userId);
-    if(!userExist) throw notFoundUserError();
+async function verifyInfo(postId: number){
 
     const postExist = await findPostById(postId);
     if(!postExist) throw notFoundError();

@@ -1,6 +1,6 @@
 import { prisma } from "@/config";
 import { faker } from "@faker-js/faker";
-import { Users } from "@prisma/client";
+import { Posts, Users } from "@prisma/client";
 
 export async function createPost(user: Users, type: number) {
     return await prisma.posts.create({
@@ -49,4 +49,13 @@ export function postWithNothing(type: number) {
     return {
         type,
     }
+}
+
+export async function deletePost(post: Posts) {
+    await prisma.comments.deleteMany({});
+    return await prisma.posts.delete({
+        where: {
+            id: post.id,
+        }
+    });
 }
