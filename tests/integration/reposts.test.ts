@@ -4,7 +4,7 @@ import supertest from "supertest";
 import httpStatus from "http-status";
 import { faker } from "@faker-js/faker";
 import * as jwt from 'jsonwebtoken';
-import { bodyLike, createLike, createPost, createUser } from "../factories";
+import { createPost, createUser } from "../factories";
 import { bodyRepost, createRepost } from "../factories/reposts-factory";
 
 beforeAll(async () => {

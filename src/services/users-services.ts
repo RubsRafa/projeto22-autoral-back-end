@@ -13,7 +13,6 @@ export async function getUserInfoService(userId: number) {
 
 export async function editUserService(userId: number, body: EditUserParams) {
     const userExist = await findUserById(userId);
-    if (!userExist) throw notFoundUserError();
 
     if (body.email && body.email !== '') {
         const emailExist = await findUserEmail(body.email);
@@ -25,7 +24,7 @@ export async function editUserService(userId: number, body: EditUserParams) {
     if(body.password && !body.confirmPassword) throw badRequestError();
     if(!body.password && body.confirmPassword) throw badRequestError();
 
-    if ((body.password && body.password !== '') || (body.confirmPassword && body.confirmPassword !== '')) {
+    if ((body.password && body.password !== '') && (body.confirmPassword && body.confirmPassword !== '')) {
         const validPassword = await bcrypt.compare(body.confirmPassword, userExist.password);
         if (!validPassword) throw notFoundUserError();
         hashedPassword = await bcrypt.hash(body.password, 12);
