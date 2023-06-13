@@ -35,7 +35,7 @@ export function userSignIn(email: string, password: string) {
 
 export function returnUserExist() {
   return {
-    id: faker.number.int(),
+    id: faker.number.int({ max: 50 }),
     name: faker.string.sample(),
     email: faker.internet.email(),
     password: faker.internet.password(),

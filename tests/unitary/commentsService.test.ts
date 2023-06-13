@@ -1,5 +1,4 @@
 import { jest } from '@jest/globals';
-import { faker } from '@faker-js/faker';;
 import likesRepository from '@/repositories/likes-repository';
 import { returnBodyPost } from '../factories';
 import commentsService from '@/services/comments-services';
