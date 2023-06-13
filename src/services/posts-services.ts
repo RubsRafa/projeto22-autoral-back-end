@@ -12,12 +12,9 @@ import { badRequestError, notFoundUserError } from '../errors';
 
 export async function getPostsService(userId: number) {
   const posts = await getAllPosts();
-  console.log('userid', userId)
-  console.log('otherUser', posts[0].userId);
   const reposts = await getAllReposts();
+
   const allInfo = [];
-  console.log('POST', posts[0])
-  console.log('REPOST', reposts[0])
 
   for (let i = 0; i < reposts.length; i++) {
     const repost = reposts[i];
@@ -49,9 +46,8 @@ export async function getPostsService(userId: number) {
   }
 
   const results = allInfo.concat(posts);
-  console.log('results', results)
+
   const myFollows = await getAllFollows(userId);
-  console.log('follows', myFollows)
   const filterPostsFromFollows = [];
 
   if (myFollows.length === 0) {
