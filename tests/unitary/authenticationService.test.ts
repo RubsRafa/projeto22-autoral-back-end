@@ -1,11 +1,10 @@
 import authenticantionRepository from '@/repositories/authentication-repository';
 import { jest } from '@jest/globals';
-import { returnSignInParams, returnUserExist, userSignIn } from '../factories';
+import { returnSignInParams, returnUserExist } from '../factories';
 import authService from '@/services/auth-services';
 import { faker } from '@faker-js/faker';
 import bcrypt from 'bcrypt';
 import { duplicatedEmailError, notFoundUserError } from '@/errors';
-import { rejects } from 'assert';
 import * as jwt from 'jsonwebtoken';
 
 afterEach(() => {

@@ -59,3 +59,20 @@ export async function deletePost(post: Posts) {
     },
   });
 }
+
+export function returnBodyPost(): Posts {
+  return {
+    id: faker.number.int(),
+    userId: faker.number.int(),
+    type: faker.number.int(),
+    video: faker.internet.ipv4(),
+    image: faker.internet.avatar(),
+    text: faker.word.words(),
+    isReposted: true,
+    repostedById: null,
+    repostedByName: null,
+    repostedByImage: null,
+    createdAt: faker.date.anytime(),
+    updatedAt: faker.date.anytime(),
+  }
+}
