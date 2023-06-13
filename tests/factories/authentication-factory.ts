@@ -32,3 +32,21 @@ export function userSignIn(email: string, password: string) {
     password,
   };
 }
+
+export function returnUserExist() {
+  return {
+    id: faker.number.int(),
+    name: faker.string.sample(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    image: faker.internet.avatar(),
+    birthday: faker.date.anytime(),
+  }
+}
+
+export function returnSignInParams() {
+  return {
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  }
+}

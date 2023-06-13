@@ -29,6 +29,7 @@ export async function loginUser(user: SignInParams) {
 
 async function validateInfo(user: SignInParams) {
   const userExist = await findUserEmail(user.email);
+  console.log(userExist);
   if (!userExist) throw notFoundUserError();
 
   const validPassword = await bcrypt.compare(user.password, userExist.password);
