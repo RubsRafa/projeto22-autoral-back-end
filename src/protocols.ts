@@ -62,79 +62,79 @@ export type FollowIdUser = {
 };
 
 export type PostsReturn = {
-  id: number,
-  userId: number,
-  type: number,
-  video: string,
-  image: string,
-  text: string,
-  isReposted: boolean,
-  createdAt: Date,
-  updatedAt: Date,
+  id: number;
+  userId: number;
+  type: number;
+  video: string;
+  image: string;
+  text: string;
+  isReposted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
   PostType: {
-    id: 1,
-    type: string,
-  },
+    id: 1;
+    type: string;
+  };
   Users: {
-    id: number,
-    name: string,
-    image: string,
-    birthday: Date
-  },
+    id: number;
+    name: string;
+    image: string;
+    birthday: Date;
+  };
   Likes: [
     {
       Users: {
-        id: number,
-        name: string,
-        image: string,
-        birthday: Date
-      },
-      id: number,
-      postId: number,
-      userId: number
-    }
-  ],
+        id: number;
+        name: string;
+        image: string;
+        birthday: Date;
+      };
+      id: number;
+      postId: number;
+      userId: number;
+    },
+  ];
   Comments: [
     {
-      id: number,
-      postId: number,
-      createdAt: Date,
-      updatedAt: Date,
-      comment: string,
+      id: number;
+      postId: number;
+      createdAt: Date;
+      updatedAt: Date;
+      comment: string;
       Users: {
-        id: number,
-        name: string,
-        image: string
-      }
-    }
-  ],
+        id: number;
+        name: string;
+        image: string;
+      };
+    },
+  ];
   Reposts: [
     {
-      id: number,
-      postId: number,
-      createdAt: Date,
-      updatedAt: Date,
+      id: number;
+      postId: number;
+      createdAt: Date;
+      updatedAt: Date;
       Users: {
-        id: number,
-        name: string,
-        image: string
-      }
-    }
-  ],
-  repostedById: number,
-  repostedByName: string,
-  repostedByImage: string
-}
+        id: number;
+        name: string;
+        image: string;
+      };
+    },
+  ];
+  repostedById: number;
+  repostedByName: string;
+  repostedByImage: string;
+};
 
 export type RepostReturn = {
-  id: number,
-  userId: number,
-  postId: number,
-  createdAt: Date,
-  updatedAt: Date,
+  id: number;
+  userId: number;
+  postId: number;
+  createdAt: Date;
+  updatedAt: Date;
   Users: {
-    id: number,
-    name: string,
-    image: string
-  }
-}
+    id: number;
+    name: string;
+    image: string;
+  };
+};

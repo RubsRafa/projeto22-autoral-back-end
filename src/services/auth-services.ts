@@ -41,6 +41,6 @@ const authService = {
   createUser,
   loginUser,
   validateInfo,
-}
+};
 
 export default authService;

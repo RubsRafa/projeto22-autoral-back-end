@@ -143,6 +143,6 @@ const postsService = {
   getPostsService,
   postPost,
   getUserAllPosts,
-}
+};
 
 export default postsService;

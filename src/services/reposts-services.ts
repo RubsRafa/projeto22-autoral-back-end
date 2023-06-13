@@ -35,6 +35,6 @@ const repostsService = {
   addRepostService,
   removeRepostService,
   verifyInfo,
-}
+};
 
 export default repostsService;

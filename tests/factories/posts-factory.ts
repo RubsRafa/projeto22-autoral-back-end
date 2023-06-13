@@ -75,7 +75,7 @@ export function returnBodyPost(): Posts {
     repostedByImage: null,
     createdAt: faker.date.anytime(),
     updatedAt: faker.date.anytime(),
-  }
+  };
 }
 
 export function returnGetPosts(otherUser: Users): PostsReturn {
@@ -97,7 +97,7 @@ export function returnGetPosts(otherUser: Users): PostsReturn {
       id: otherUser.id,
       name: faker.internet.displayName(),
       image: faker.internet.avatar(),
-      birthday: faker.date.anytime()
+      birthday: faker.date.anytime(),
     },
     Likes: [
       {
@@ -105,12 +105,12 @@ export function returnGetPosts(otherUser: Users): PostsReturn {
           id: faker.number.int({ max: 50 }),
           name: faker.internet.displayName(),
           image: faker.internet.avatar(),
-          birthday: faker.date.anytime()
+          birthday: faker.date.anytime(),
         },
         id: faker.number.int({ max: 50 }),
         postId: faker.number.int({ max: 50 }),
-        userId: faker.number.int({ max: 50 })
-      }
+        userId: faker.number.int({ max: 50 }),
+      },
     ],
     Comments: [
       {
@@ -122,9 +122,9 @@ export function returnGetPosts(otherUser: Users): PostsReturn {
         Users: {
           id: faker.number.int({ max: 50 }),
           name: faker.internet.displayName(),
-          image: faker.internet.avatar()
-        }
-      }
+          image: faker.internet.avatar(),
+        },
+      },
     ],
     Reposts: [
       {
@@ -136,11 +136,11 @@ export function returnGetPosts(otherUser: Users): PostsReturn {
           id: otherUser.id,
           name: faker.internet.displayName(),
           image: faker.internet.avatar(),
-        }
-      }
+        },
+      },
     ],
     repostedById: otherUser.id,
     repostedByName: otherUser.name,
     repostedByImage: otherUser.image,
-  }
+  };
 }

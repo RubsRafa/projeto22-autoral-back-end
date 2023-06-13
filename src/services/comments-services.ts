@@ -36,6 +36,6 @@ const commentsService = {
   removeCommentService,
   verifyInfo,
   getComments,
-}
+};
 
 export default commentsService;

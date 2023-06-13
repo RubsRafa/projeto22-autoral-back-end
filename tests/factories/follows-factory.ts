@@ -1,6 +1,6 @@
 import { Follows, Users } from '@prisma/client';
-import { prisma } from '@/config';
 import { faker } from '@faker-js/faker';
+import { prisma } from '@/config';
 
 export async function createFollow(user: Users, follow: Users) {
   return await prisma.follows.create({
@@ -28,5 +28,5 @@ export function returnFollows(user: Users, otherUser: Users) {
     id: faker.number.int(),
     userId: user.id,
     userIdIFollow: otherUser.id,
-  }
+  };
 }

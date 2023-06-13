@@ -41,12 +41,12 @@ export function returnUserExist() {
     password: faker.internet.password(),
     image: faker.internet.avatar(),
     birthday: faker.date.anytime(),
-  }
+  };
 }
 
 export function returnSignInParams() {
   return {
     email: faker.internet.email(),
     password: faker.internet.password(),
-  }
+  };
 }

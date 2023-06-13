@@ -1,11 +1,11 @@
-import authenticantionRepository from '@/repositories/authentication-repository';
 import { jest } from '@jest/globals';
-import { returnSignInParams, returnUserExist } from '../factories';
-import authService from '@/services/auth-services';
 import { faker } from '@faker-js/faker';
 import bcrypt from 'bcrypt';
-import { duplicatedEmailError, notFoundUserError } from '@/errors';
 import * as jwt from 'jsonwebtoken';
+import { returnSignInParams, returnUserExist } from '../factories';
+import authService from '@/services/auth-services';
+import { duplicatedEmailError, notFoundUserError } from '@/errors';
+import authenticantionRepository from '@/repositories/authentication-repository';
 
 afterEach(() => {
   jest.restoreAllMocks();
@@ -32,7 +32,9 @@ describe('authService test suite', () => {
       const hashedPassword = faker.internet.password();
 
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce(null);
-      jest.spyOn(bcrypt, 'hash').mockImplementationOnce(() => { return hashedPassword });
+      jest.spyOn(bcrypt, 'hash').mockImplementationOnce(() => {
+        return hashedPassword;
+      });
       jest.spyOn(authenticantionRepository, 'singUp').mockResolvedValue(user);
 
       const response = await authService.createUser(user);
@@ -49,7 +51,9 @@ describe('authService test suite', () => {
       const userSignInParams = returnSignInParams();
 
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockResolvedValue(user);
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => { return true });
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+        return true;
+      });
 
       const response = await authService.validateInfo(userSignInParams);
 
@@ -61,9 +65,10 @@ describe('authService test suite', () => {
       const user = returnUserExist();
       const hashedPassword = faker.internet.password();
 
-
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockResolvedValue(undefined);
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => { return hashedPassword });
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+        return hashedPassword;
+      });
 
       await expect(authService.validateInfo(user)).rejects.toEqual(notFoundUserError());
       expect(authenticantionRepository.findUserEmail).toHaveBeenCalledWith(user.email);
@@ -72,8 +77,12 @@ describe('authService test suite', () => {
     it('should throw error if user password is not correct', async () => {
       const user = returnUserExist();
 
-      jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce((): any => { return user });
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => { return false });
+      jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce((): any => {
+        return user;
+      });
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+        return false;
+      });
 
       await expect(authService.validateInfo(user)).rejects.toEqual(notFoundUserError());
       expect(authenticantionRepository.findUserEmail).toHaveBeenCalledWith(user.email);
@@ -85,19 +94,27 @@ describe('authService test suite', () => {
       const user = returnUserExist();
       const userSignInParams = returnSignInParams();
       const token = faker.string.uuid();
-      const info  = { userId: user.id, image: user.image, email: user.email, name: user.name, birthday: user.birthday };
+      const info = { userId: user.id, image: user.image, email: user.email, name: user.name, birthday: user.birthday };
 
-      jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce((): any => { return user });
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => { return true });
-      jest.spyOn(jwt, 'sign').mockImplementationOnce((): string => { return token });
-      jest.spyOn(authenticantionRepository, 'createSession').mockImplementationOnce((): any => { return });
+      jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce((): any => {
+        return user;
+      });
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+        return true;
+      });
+      jest.spyOn(jwt, 'sign').mockImplementationOnce((): string => {
+        return token;
+      });
+      jest.spyOn(authenticantionRepository, 'createSession').mockImplementationOnce((): any => {
+        return;
+      });
 
       const response = await authService.loginUser(userSignInParams);
 
       expect(authenticantionRepository.findUserEmail).toHaveBeenCalledWith(userSignInParams.email);
       expect(bcrypt.compare).toHaveBeenCalledWith(userSignInParams.password, user.password);
       expect(jwt.sign).toHaveBeenCalled();
-      expect(authenticantionRepository.createSession).toHaveBeenCalledWith(user.id, token)
+      expect(authenticantionRepository.createSession).toHaveBeenCalledWith(user.id, token);
       expect(response).toEqual({ info, token });
     });
   });

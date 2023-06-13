@@ -56,6 +56,6 @@ const likesService = {
   verifyInfo,
   getLikesService,
   getAllLikesService,
-}
+};
 
 export default likesService;

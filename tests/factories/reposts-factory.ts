@@ -1,6 +1,6 @@
 import { Posts, Users } from '@prisma/client';
-import { prisma } from '@/config';
 import { faker } from '@faker-js/faker';
+import { prisma } from '@/config';
 import { PostsReturn, RepostReturn } from '@/protocols';
 
 export async function createRepost(user: Users, post: Posts) {
@@ -29,8 +29,8 @@ export function returnReposts(otherUser: Users, post: PostsReturn): RepostReturn
       id: otherUser.id,
       name: faker.internet.displayName(),
       image: faker.internet.avatar(),
-    }
-  }
+    },
+  };
 }
 export function returnGetReposts(post: PostsReturn, repost: RepostReturn): PostsReturn {
   return {
@@ -51,5 +51,5 @@ export function returnGetReposts(post: PostsReturn, repost: RepostReturn): Posts
     repostedById: repost.Users.id,
     repostedByName: repost.Users.name,
     repostedByImage: repost.Users.image,
-  }
+  };
 }

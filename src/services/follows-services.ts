@@ -48,6 +48,6 @@ const followsService = {
   findMyFollows,
   followUser,
   removeFollowService,
-}
+};
 
 export default followsService;

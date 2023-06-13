@@ -44,6 +44,6 @@ export async function editUserService(userId: number, body: EditUserParams) {
 const usersService = {
   getUserInfoService,
   editUserService,
-}
+};
 
 export default usersService;
