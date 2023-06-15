@@ -146,7 +146,6 @@ describe('DELETE /follow', () => {
       const body = bodyDeleteFollow(follow);
 
       const response = await server.delete(`/follow`).set('Authorization', `Bearer ${token}`).send(body);
-      console.log(response);
       expect(response.status).toEqual(httpStatus.OK);
     });
   });
