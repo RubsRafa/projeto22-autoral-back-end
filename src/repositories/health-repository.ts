@@ -1,3 +1,4 @@
+import { HealthParams } from "../protocols";
 import { prisma } from "../config";
 
 export async function getUserDiary(id: number) {
@@ -19,9 +20,32 @@ export async function addHumor(userId: number, text: string, color: string, mood
     })
 }
 
+export async function changeHumor(body: HealthParams) {
+    return await prisma.health.update({
+        where: {
+            id: body.id,
+        },
+        data: {
+            text: body.text,
+            color: body.color,
+            mood: body.mood
+        }
+    })
+}
+
+export async function findHumorDiary(id: number) {
+    return await prisma.health.findFirst({
+        where: {
+            id,
+        }
+    })
+}
+
 const healthRepository = {
     getUserDiary,
-    addHumor
+    addHumor,
+    changeHumor,
+    findHumorDiary,
 }
 
 export default healthRepository;

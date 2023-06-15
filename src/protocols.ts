@@ -138,3 +138,11 @@ export type RepostReturn = {
     image: string;
   };
 };
+
+export type HealthParams = {
+  id?: number;
+  userId: number;
+  text: string;
+  color: string;
+  mood: number;
+}
