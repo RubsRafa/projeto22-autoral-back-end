@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
-import { editUserService, getUserInfoService } from '../services';
+import { editUserService, findUser, getUserInfoService } from '../services';
 import { AuthenticatedRequest, EditUserParams, JWT } from '../protocols';
 
 export async function getUsersInfoController(req: AuthenticatedRequest, res: Response, next: NextFunction) {
@@ -19,6 +19,16 @@ export async function editUserInfoController(req: AuthenticatedRequest, res: Res
   try {
     await editUserService(userId, body);
     return res.sendStatus(httpStatus.OK);
+  } catch (e) {
+    next(e);
+  }
+}
+
+export async function searchForUser(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const { name } = req.params as EditUserParams;
+  try {
+    const users = await findUser(name);
+    return res.status(httpStatus.OK).send(users);
   } catch (e) {
     next(e);
   }

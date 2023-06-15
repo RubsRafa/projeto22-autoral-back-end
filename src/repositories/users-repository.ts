@@ -70,9 +70,26 @@ export async function editUserInfo(id: number, body: EditUserParams) {
   return;
 }
 
+export async function findUserByName(name: string) {
+  return await prisma.users.findMany({
+    where: {
+      name: {
+        startsWith: name,
+        contains: name
+      }
+    },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    }
+  })
+}
+
 const usersRepository = {
   getUserInfo,
   editUserInfo,
+  findUserByName
 };
 
 export default usersRepository;

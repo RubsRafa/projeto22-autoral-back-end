@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { EditUserParams } from '../protocols';
 import { badRequestError, duplicatedEmailError, notFoundUserError } from '../errors';
-import { editUserInfo, findUserById, findUserEmail, getUserInfo } from '../repositories';
+import { editUserInfo, findUserById, findUserByName, findUserEmail, getUserInfo } from '../repositories';
 
 export async function getUserInfoService(userId: number) {
   const userExist = await findUserById(userId);
@@ -41,9 +41,15 @@ export async function editUserService(userId: number, body: EditUserParams) {
   return await editUserInfo(userId, newBody);
 }
 
+export async function findUser(name: string) {
+  const users = await findUserByName(name);
+  return users;
+}
+
 const usersService = {
   getUserInfoService,
   editUserService,
+  findUser
 };
 
 export default usersService;
