@@ -36,7 +36,7 @@ export async function changeHumorItem(req: AuthenticatedRequest, res: Response, 
 }
 
 export async function deleteHumorItem(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-    const { id } = req.body as HealthParams
+    const id = Number(req.params.id);
     try {
         await deleteItem(id);
         return res.sendStatus(httpStatus.OK);

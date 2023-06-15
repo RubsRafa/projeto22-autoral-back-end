@@ -9,6 +9,6 @@ healthRouter
   .get('/', getUserHumorDiary)
   .post('/', addHumor)
   .put('/', changeHumorItem)
-  .delete('/', deleteHumorItem)
+  .delete('/:id', deleteHumorItem)
 
 export { healthRouter};
