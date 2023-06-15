@@ -44,7 +44,7 @@ export async function getPostsService(userId: number) {
       }
     }
   }
-
+  
   const results = allInfo.concat(posts);
 
   const myFollows = await getAllFollows(userId);

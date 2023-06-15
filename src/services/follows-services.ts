@@ -1,4 +1,4 @@
-import { notFoundError, notFoundUserError } from '../errors';
+import { conflictError, notFoundError, notFoundUserError } from '../errors';
 import { FollowParams } from '../protocols';
 import { createFollow, findFollow, findUserById, getAllFollows, getAllUsers, removeFollow } from '../repositories';
 
@@ -32,6 +32,10 @@ export async function followUser(userId: number, userIdIFollow: number) {
   const existUserFollowed = await findUserById(userIdIFollow);
   if (!existUserFollowed) throw notFoundUserError();
 
+  const myFollows = await findMyFollows(userId);
+  const follow = myFollows.find((f) => f.userIdIFollow === userIdIFollow);
+  if(follow) throw conflictError();
+  
   await createFollow(userId, userIdIFollow);
   return;
 }
