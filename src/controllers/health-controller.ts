@@ -1,4 +1,4 @@
-import { getUserHumor, postHumor, putHumor } from "../services";
+import { deleteItem, getUserHumor, postHumor, putHumor } from "../services";
 import { AuthenticatedRequest, HealthParams, JWT } from "../protocols";
 import { NextFunction, Response } from "express";
 import httpStatus from "http-status";
@@ -29,6 +29,16 @@ export async function changeHumorItem(req: AuthenticatedRequest, res: Response, 
     const { id, text, color, mood } = req.body as HealthParams
     try {
         await putHumor({ userId, id, text, color, mood});
+        return res.sendStatus(httpStatus.OK);
+    } catch (e) {
+        next(e);
+    }
+}
+
+export async function deleteHumorItem(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    const { id } = req.body as HealthParams
+    try {
+        await deleteItem(id);
         return res.sendStatus(httpStatus.OK);
     } catch (e) {
         next(e);

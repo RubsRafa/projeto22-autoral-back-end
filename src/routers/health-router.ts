@@ -1,4 +1,4 @@
-import { addHumor, changeHumorItem, getUserHumorDiary } from "../controllers";
+import { addHumor, changeHumorItem, deleteHumorItem, getUserHumorDiary } from "../controllers";
 import { authenticateToken } from "../middlewares";
 import { Router } from "express";
 
@@ -9,5 +9,6 @@ healthRouter
   .get('/', getUserHumorDiary)
   .post('/', addHumor)
   .put('/', changeHumorItem)
+  .delete('/', deleteHumorItem)
 
 export { healthRouter};

@@ -1,6 +1,6 @@
 import { HealthParams } from "../protocols";
 import { conflictError } from "../errors";
-import { addHumor, changeHumor, findHumorDiary, getUserDiary } from "../repositories";
+import { addHumor, changeHumor, deleteHumor, findHumorDiary, getUserDiary } from "../repositories";
 
 export async function getUserHumor(userId: number) {
     const diary = await getUserDiary(userId);
@@ -21,10 +21,19 @@ export async function putHumor(body: HealthParams) {
     return;
 }
 
+export async function deleteItem(id: number) {
+    const humor = await findHumorDiary(id);
+    if(!humor) throw conflictError();
+
+    await deleteHumor(id);
+    return;
+}
+
 const healthService = {
     getUserDiary,
     postHumor,
     putHumor,
+    deleteItem,
 }
 
 export default healthService;

@@ -41,11 +41,20 @@ export async function findHumorDiary(id: number) {
     })
 }
 
+export async function deleteHumor(id: number) {
+    return await prisma.health.delete({
+        where: {
+            id,
+        }
+    })
+}
+
 const healthRepository = {
     getUserDiary,
     addHumor,
     changeHumor,
     findHumorDiary,
+    deleteHumor,
 }
 
 export default healthRepository;
