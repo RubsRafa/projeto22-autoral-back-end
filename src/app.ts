@@ -8,6 +8,7 @@ import {
   authRouter,
   commentsRouter,
   followsRouter,
+  healthRouter,
   likesRouter,
   postsRouter,
   repostsRouter,
@@ -28,6 +29,7 @@ app
   .use('/repost', repostsRouter)
   .use('/users', userRouter)
   .use('/follow', followsRouter)
+  .use('/mental-health', healthRouter)
   .use(handleErrors);
 
 export function init(): Promise<Express> {
