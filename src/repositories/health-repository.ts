@@ -8,8 +8,20 @@ export async function getUserDiary(id: number) {
     })
 }
 
+export async function addHumor(userId: number, text: string, color: string, mood: number) {
+    return await prisma.health.create({
+        data: {
+            userId,
+            text,
+            color,
+            mood
+        }
+    })
+}
+
 const healthRepository = {
     getUserDiary,
+    addHumor
 }
 
 export default healthRepository;
