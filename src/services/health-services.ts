@@ -4,6 +4,7 @@ import { addHumor, changeHumor, deleteHumor, findHumorDiary, getUserDiary } from
 
 export async function getUserHumor(userId: number) {
     const diary = await getUserDiary(userId);
+    diary.sort((a, b) => b.date.getTime() - a.date.getTime());
     return diary;
 }
 
