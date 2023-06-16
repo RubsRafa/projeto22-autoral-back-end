@@ -146,10 +146,19 @@ export async function getAllUserPosts(userId: number) {
   });
 }
 
+export async function deletePost(postId: number) {
+  return await prisma.posts.delete({
+    where: {
+      id: postId,
+    }
+  })
+}
+
 const postsRepository = {
   getAllPosts,
   post,
   getAllUserPosts,
+  deletePost,
 };
 
 export default postsRepository;

@@ -7,8 +7,10 @@ import {
   getAllUserPosts,
   post,
   getAllFollows,
+  findPostById,
+  deletePost,
 } from '../repositories';
-import { badRequestError, notFoundUserError } from '../errors';
+import { badRequestError, conflictError, notFoundUserError } from '../errors';
 
 export async function getPostsService(userId: number) {
   const posts = await getAllPosts();
@@ -139,10 +141,20 @@ export async function getUserAllPosts(userId: number) {
   return results;
 }
 
+export async function deletePostService(userId: number, postId: number) {
+  const post = await findPostById(postId);
+  if(!post) throw conflictError();
+
+  if(post.userId !== userId) throw conflictError();
+  await deletePost(postId);
+  return;
+}
+
 const postsService = {
   getPostsService,
   postPost,
   getUserAllPosts,
+  deletePostService,
 };
 
 export default postsService;

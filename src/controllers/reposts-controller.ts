@@ -16,7 +16,7 @@ export async function addRepostPost(req: AuthenticatedRequest, res: Response, ne
 
 export async function removeRepostPost(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { userId } = req as JWT;
-  const { postId } = req.body as PostId;
+  const postId = Number(req.params.postId);
   try {
     await removeRepostService(userId, postId);
     return res.sendStatus(httpStatus.OK);

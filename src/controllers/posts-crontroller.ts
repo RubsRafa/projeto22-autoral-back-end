@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
-import { getPostsService, getUserAllPosts, postPost } from '../services';
+import { deletePostService, getPostsService, getUserAllPosts, postPost } from '../services';
 import { AuthenticatedRequest, JWT, PostParams } from '../protocols';
 
 export async function getPosts(req: AuthenticatedRequest, res: Response, next: NextFunction) {
@@ -29,6 +29,17 @@ export async function getUserPosts(req: AuthenticatedRequest, res: Response, nex
   try {
     const userPosts = await getUserAllPosts(userId);
     return res.status(httpStatus.OK).send(userPosts);
+  } catch (e) {
+    next(e);
+  }
+}
+
+export async function deleteUserPosts(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const { userId } = req as JWT;
+  const postId = Number(req.params.postId);
+  try {
+    await deletePostService(userId, postId);
+    return res.sendStatus(httpStatus.OK);
   } catch (e) {
     next(e);
   }

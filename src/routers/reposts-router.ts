@@ -4,6 +4,6 @@ import { authenticateToken } from '../middlewares';
 
 const repostsRouter = Router();
 
-repostsRouter.all('/*', authenticateToken).post('/', addRepostPost).delete('/', removeRepostPost);
+repostsRouter.all('/*', authenticateToken).post('/', addRepostPost).delete('/:postId', removeRepostPost);
 
 export { repostsRouter };
