@@ -1,5 +1,5 @@
 import { MessagesParams } from "../protocols";
-import { deleteMessage, findChatById, findUserById, getMyMessages, sendMessages } from "../repositories";
+import { deleteMessage, findChatById, findUserById, getMyMessages, getUserMessages, sendMessages } from "../repositories";
 import { conflictError, notFoundError, notFoundUserError } from "../errors";
 
 export async function getAllMyMessages(userId: number) {
@@ -28,6 +28,22 @@ export async function deleteUserMessage(userId: number, messageId: number) {
     return;
 }
 
+export async function getOnlyUsersChat(userId: number) {
+    const messages = await getUserMessages();
+    const users = messages.filter((m) => (m.fromId === userId) || (m.toId === userId)).map((u) => (u.fromId === userId ? u.Chat_toIdToUsers : u.Chat_fromIdToUsers));
+    const filterUsers: { id: number; name: string; image: string; }[] = []
+    const filterUsersIds: number[] = [];
+    users.forEach((s) => {
+        if(filterUsersIds.includes(s.id)) {
+            return;
+        } else {
+            filterUsers.push(s);
+            filterUsersIds.push(s.id)
+        }
+    })
+
+    return filterUsers;
+}
 
 
 const chatServices = {
