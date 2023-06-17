@@ -2,10 +2,10 @@ import { MessagesParams } from "../protocols";
 import { deleteMessage, findChatById, findUserById, getMyMessages, getUserMessages, sendMessages } from "../repositories";
 import { conflictError, notFoundError, notFoundUserError } from "../errors";
 
-export async function getAllMyMessages(userId: number) {
+export async function getAllMyMessages(userId: number, otherUser: number) {
     const messages = await getMyMessages();
-    messages.filter((m) => (m.fromId === userId) || (m.toId === userId));
-    return messages;
+    const messagesFiltered = messages.filter((m) => ((m.fromId === userId) && (m.toId === otherUser)) || ((m.fromId === otherUser) && (m.toId === userId)));
+    return messagesFiltered;
 }
 
 export async function addNewMessage(body: MessagesParams){
@@ -30,15 +30,15 @@ export async function deleteUserMessage(userId: number, messageId: number) {
 
 export async function getOnlyUsersChat(userId: number) {
     const messages = await getUserMessages();
-    const users = messages.filter((m) => (m.fromId === userId) || (m.toId === userId)).map((u) => (u.fromId === userId ? u.Chat_toIdToUsers : u.Chat_fromIdToUsers));
-    const filterUsers: { id: number; name: string; image: string; }[] = []
+    const users = messages.filter((m) => (m.fromId === userId) || (m.toId === userId)).map((u) => (u.fromId === userId ? {user: u.Chat_toIdToUsers, message: u.message} : {user: u.Chat_fromIdToUsers, message: u.message}));
+    const filterUsers: {user: { id: number; name: string; image: string; }, message: string; }[] = []
     const filterUsersIds: number[] = [];
     users.forEach((s) => {
-        if(filterUsersIds.includes(s.id)) {
+        if(filterUsersIds.includes(s.user.id)) {
             return;
         } else {
             filterUsers.push(s);
-            filterUsersIds.push(s.id)
+            filterUsersIds.push(s.user.id)
         }
     })
 

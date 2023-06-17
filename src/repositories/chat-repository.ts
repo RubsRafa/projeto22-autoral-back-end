@@ -2,7 +2,9 @@ import { MessagesParams } from "../protocols";
 import { prisma } from "../config";
 
 export async function getMyMessages() {
-    return await prisma.chat.findMany({})
+    return await prisma.chat.findMany({
+        
+    })
 }
 
 export async function getUserMessages(){
@@ -10,6 +12,7 @@ export async function getUserMessages(){
         select: {
             fromId: true,
             toId: true,
+            message: true,
             Chat_toIdToUsers: {
                 select:{
                     id: true,
