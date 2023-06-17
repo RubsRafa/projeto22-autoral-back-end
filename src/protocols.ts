@@ -146,3 +146,9 @@ export type HealthParams = {
   color: string;
   mood: number;
 }
+
+export type MessagesParams = {
+  fromId: number;
+  toId: number;
+  message: string;
+}

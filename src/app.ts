@@ -6,6 +6,7 @@ import { connectDb, disconnectDB, loadEnv } from './config';
 import { handleErrors } from './middlewares';
 import {
   authRouter,
+  chatRouter,
   commentsRouter,
   followsRouter,
   healthRouter,
@@ -30,6 +31,7 @@ app
   .use('/users', userRouter)
   .use('/follow', followsRouter)
   .use('/mental-health', healthRouter)
+  .use('/chat', chatRouter)
   .use(handleErrors);
 
 export function init(): Promise<Express> {

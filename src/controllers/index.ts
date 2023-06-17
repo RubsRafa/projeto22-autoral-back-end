@@ -6,3 +6,4 @@ export * from './reposts-controller';
 export * from './users-controller';
 export * from './follows-controller';
 export * from './health-controller';
+export * from './chat-controller';

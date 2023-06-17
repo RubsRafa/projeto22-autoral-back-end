@@ -6,3 +6,4 @@ export * from './reposts-repository';
 export * from './users-repository';
 export * from './follows-repository';
 export * from './health-repository';
+export * from './chat-repository';
