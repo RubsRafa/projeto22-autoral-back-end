@@ -1,8 +1,31 @@
-import { MessagesParams } from "@/protocols";
+import { MessagesParams } from "../protocols";
 import { prisma } from "../config";
 
 export async function getMyMessages() {
     return await prisma.chat.findMany({})
+}
+
+export async function getUserMessages(){
+    return await prisma.chat.findMany({
+        select: {
+            fromId: true,
+            toId: true,
+            Chat_toIdToUsers: {
+                select:{
+                    id: true,
+                    name: true,
+                    image: true,
+                }
+            },
+            Chat_fromIdToUsers: {
+                select: {
+                    id: true,
+                    name: true,
+                    image: true,
+                }
+            },
+        }
+    })
 }
 
 export async function findChatById(id: number) {
