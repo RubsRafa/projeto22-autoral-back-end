@@ -1,5 +1,5 @@
 import { MessagesParams } from "../protocols";
-import { deleteMessage, findChatById, findUserById, getMyMessages, getUserMessages, sendMessages } from "../repositories";
+import { deleteMessage, findChatById, findUserById, getMyFollowsInfo, getMyMessages, getUserMessages, sendMessages } from "../repositories";
 import { conflictError, notFoundError, notFoundUserError } from "../errors";
 
 export async function getAllMyMessages(userId: number, otherUser: number) {
@@ -29,7 +29,9 @@ export async function deleteUserMessage(userId: number, messageId: number) {
 }
 
 export async function getOnlyUsersChat(userId: number) {
+    const myFollows = await getMyFollowsInfo(userId);
     const messages = await getUserMessages();
+
     const users = messages.filter((m) => (m.fromId === userId) || (m.toId === userId)).map((u) => (u.fromId === userId ? {user: u.Chat_toIdToUsers, message: u.message} : {user: u.Chat_fromIdToUsers, message: u.message}));
     const filterUsers: {user: { id: number; name: string; image: string; }, message: string; }[] = []
     const filterUsersIds: number[] = [];
@@ -39,6 +41,14 @@ export async function getOnlyUsersChat(userId: number) {
         } else {
             filterUsers.push(s);
             filterUsersIds.push(s.user.id)
+        }
+    });
+    myFollows.forEach((f) => {
+        if(filterUsersIds.includes(f.Users_Follows_userIdIFollowToUsers.id)) {
+            return;
+        } else {
+            filterUsers.push({user: f.Users_Follows_userIdIFollowToUsers, message: null})
+            filterUsersIds.push(f.Users_Follows_userIdIFollowToUsers.id);
         }
     })
 

@@ -37,12 +37,30 @@ export async function findFollow(id: number) {
   });
 }
 
+export async function getMyFollowsInfo(userId: number) {
+  return await prisma.follows.findMany({
+    where: {
+      userId
+    },
+    include: {
+      Users_Follows_userIdIFollowToUsers:{
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        }
+      }
+    },
+  })
+}
+
 const followsRepository = {
   getAllFollows,
   getAllUsers,
   createFollow,
   removeFollow,
   findFollow,
+  getMyFollowsInfo,
 };
 
 export default followsRepository;
