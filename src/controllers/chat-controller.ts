@@ -5,8 +5,9 @@ import { addNewMessage, deleteUserMessage, getAllMyMessages, getOnlyUsersChat } 
 
 export async function getUserMessages(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const { userId } = req as JWT;
+    const otherUser = Number(req.params.userId);
     try {
-        const messages = await getAllMyMessages(userId)
+        const messages = await getAllMyMessages(userId, otherUser)
         return res.status(httpStatus.OK).send(messages);
     } catch (e) {
         next(e);
@@ -40,7 +41,7 @@ export async function deleteMessage(req: AuthenticatedRequest, res: Response, ne
     }
 }
 
-export async function getUsersMessages(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+export async function getUsersChat(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const { userId } = req as JWT;
     try {
         const messages = await getOnlyUsersChat(userId);
