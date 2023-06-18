@@ -59,6 +59,7 @@ export async function deleteMessage(messageId: number) {
 
 const chatRepository = {
     getMyMessages,
+    getUserMessages,
     findChatById,
     sendMessages, 
     deleteMessage,

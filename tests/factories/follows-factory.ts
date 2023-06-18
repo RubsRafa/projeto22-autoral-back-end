@@ -30,3 +30,17 @@ export function returnFollows(user: Users, otherUser: Users) {
     userIdIFollow: otherUser.id,
   };
 }
+
+
+export function getFollowsInfo(user: Users, otherUser: Users) {
+  return {
+    id: faker.number.int(),
+    userId: user.id,
+    userIdIFollow: otherUser.id,
+    Users_Follows_userIdIFollowToUsers: {
+      id: otherUser.id,
+      image: otherUser.image,
+      name: otherUser.name,
+  }
+  }
+}

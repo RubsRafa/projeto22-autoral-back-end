@@ -60,6 +60,7 @@ const chatServices = {
     getAllMyMessages,
     addNewMessage,
     deleteUserMessage,
+    getOnlyUsersChat,
 }
 
 export default chatServices;
