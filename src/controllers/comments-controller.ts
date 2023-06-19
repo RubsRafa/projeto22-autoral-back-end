@@ -16,7 +16,7 @@ export async function commentPost(req: AuthenticatedRequest, res: Response, next
 
 export async function removeCommentPost(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { userId } = req as JWT;
-  const { commentId } = req.body;
+  const commentId = Number(req.params.commentId);
   try {
     await removeCommentService(userId, commentId);
     return res.sendStatus(httpStatus.OK);

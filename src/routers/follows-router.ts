@@ -8,6 +8,6 @@ followsRouter
   .all('/*', authenticateToken)
   .get('/:userId', getMyFollows)
   .post('/', followAnUser)
-  .delete('/', removeFollow);
+  .delete('/:followId', removeFollow);
 
 export { followsRouter };

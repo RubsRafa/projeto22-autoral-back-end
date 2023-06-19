@@ -8,6 +8,6 @@ commentsRouter
   .all('/*', authenticateToken)
   .get('/', getCommentsPosts)
   .post('/', commentPost)
-  .delete('/', removeCommentPost);
+  .delete('/:commentId', removeCommentPost);
 
 export { commentsRouter };

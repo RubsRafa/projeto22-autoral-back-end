@@ -16,7 +16,7 @@ export async function likePost(req: AuthenticatedRequest, res: Response, next: N
 
 export async function dislikePost(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { userId } = req as JWT;
-  const { postId } = req.body as PostId;
+  const postId = Number(req.params.postId);
   try {
     await removeLike(userId, postId);
     return res.sendStatus(httpStatus.OK);

@@ -142,9 +142,9 @@ export type RepostReturn = {
 export type HealthParams = {
   id?: number;
   userId: number;
-  text: string;
-  color: string;
-  mood: number;
+  text?: string;
+  color?: string;
+  mood?: number;
 }
 
 export type MessagesParams = {

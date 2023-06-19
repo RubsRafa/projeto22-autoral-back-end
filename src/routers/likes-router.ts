@@ -9,6 +9,6 @@ likesRouter
   .get('/users', getAllLikes)
   .get('/', getLikes)
   .post('/', likePost)
-  .delete('/', dislikePost);
+  .delete('/:postId', dislikePost);
 
 export { likesRouter };

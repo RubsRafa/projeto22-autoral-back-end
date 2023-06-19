@@ -31,7 +31,7 @@ export async function deleteItem(id: number) {
 }
 
 const healthService = {
-    getUserDiary,
+    getUserHumor,
     postHumor,
     putHumor,
     deleteItem,
