@@ -1,4 +1,4 @@
-import { PostParams } from '../protocols';
+import { PostParams, PostsReturn } from '../protocols';
 import {
   findUserById,
   getAllPosts,
@@ -16,7 +16,7 @@ export async function getPostsService(userId: number) {
   const posts = await getAllPosts();
   const reposts = await getAllReposts();
 
-  const allInfo = [];
+  const allInfo: PostsReturn[] = [];
 
   for (let i = 0; i < reposts.length; i++) {
     const repost = reposts[i];
@@ -46,40 +46,47 @@ export async function getPostsService(userId: number) {
       }
     }
   }
-  
-  const results = allInfo.concat(posts);
 
+  const results: PostsReturn[] = allInfo.concat(posts);
   const myFollows = await getAllFollows(userId);
-  const filterPostsFromFollows = [];
+  const filterPostsFromFollows: PostsReturn[] = [];
+  const postIdsOthers: number[]= [];
+  
+  const onlyMyPostsAndReposts: PostsReturn[] = [];
+  // const postIdsMine: number[]= [];
 
-  if (myFollows.length === 0) {
-    for (let i = 0; i < results.length; i++) {
-      const post = results[i];
-      if (post.userId === userId || (post.isReposted && post.repostedById === userId)) {
-        filterPostsFromFollows.push(post);
-      }
+  for (let i = 0; i < results.length; i++) {
+    const post = results[i];
+    if (post.userId === userId || (post.isReposted && post.repostedById === userId)) {
+      onlyMyPostsAndReposts.push(post);
     }
-  } else {
+  }
+
+  if (myFollows.length !== 0) {
     for (let i = 0; i < myFollows.length; i++) {
       const follows = myFollows[i];
 
       for (let x = 0; x < results.length; x++) {
         const post = results[x];
+
         if (
           post.userId === follows.userIdIFollow ||
-          (post.userId === userId && !post.isReposted) ||
-          (post.isReposted && post.repostedById === userId) ||
           (post.isReposted && post.repostedById === follows.userIdIFollow)
         ) {
-          filterPostsFromFollows.push(post);
+          if (!postIdsOthers.includes(post.id)) {
+            filterPostsFromFollows.push(post);
+            postIdsOthers.push(post.id);
+          }
         }
       }
     }
   }
 
-  filterPostsFromFollows.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+  const finalResults = onlyMyPostsAndReposts.concat(filterPostsFromFollows);
 
-  return filterPostsFromFollows;
+  finalResults.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+
+  return finalResults;
 }
 
 export async function postPost(userId: number, body: PostParams) {
@@ -143,9 +150,9 @@ export async function getUserAllPosts(userId: number) {
 
 export async function deletePostService(userId: number, postId: number) {
   const post = await findPostById(postId);
-  if(!post) throw conflictError();
+  if (!post) throw conflictError();
 
-  if(post.userId !== userId) throw conflictError();
+  if (post.userId !== userId) throw conflictError();
   await deletePost(postId);
   return;
 }

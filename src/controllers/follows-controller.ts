@@ -26,7 +26,6 @@ export async function followAnUser(req: AuthenticatedRequest, res: Response, nex
 
 export async function removeFollow(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   // const { userId } = req as JWT;
-  console.log('chegou aqui');
   const followId = Number(req.params.followId);
   try {
     await removeFollowService(followId);

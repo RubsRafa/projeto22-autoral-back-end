@@ -72,7 +72,7 @@ export type PostsReturn = {
   createdAt: Date;
   updatedAt: Date;
   PostType: {
-    id: 1;
+    id: number;
     type: string;
   };
   Users: {
@@ -81,46 +81,9 @@ export type PostsReturn = {
     image: string;
     birthday: Date;
   };
-  Likes: [
-    {
-      Users: {
-        id: number;
-        name: string;
-        image: string;
-        birthday: Date;
-      };
-      id: number;
-      postId: number;
-      userId: number;
-    },
-  ];
-  Comments: [
-    {
-      id: number;
-      postId: number;
-      createdAt: Date;
-      updatedAt: Date;
-      comment: string;
-      Users: {
-        id: number;
-        name: string;
-        image: string;
-      };
-    },
-  ];
-  Reposts: [
-    {
-      id: number;
-      postId: number;
-      createdAt: Date;
-      updatedAt: Date;
-      Users: {
-        id: number;
-        name: string;
-        image: string;
-      };
-    },
-  ];
+  Likes: (string | number | Date | object)[];
+  Comments: (string | number | Date | object)[];
+  Reposts: (string | number | Date | object)[];
   repostedById: number;
   repostedByName: string;
   repostedByImage: string;
