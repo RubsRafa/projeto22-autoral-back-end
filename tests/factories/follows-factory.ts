@@ -31,7 +31,6 @@ export function returnFollows(user: Users, otherUser: Users) {
   };
 }
 
-
 export function getFollowsInfo(user: Users, otherUser: Users) {
   return {
     id: faker.number.int(),
@@ -41,6 +40,6 @@ export function getFollowsInfo(user: Users, otherUser: Users) {
       id: otherUser.id,
       image: otherUser.image,
       name: otherUser.name,
-  }
-  }
+    },
+  };
 }

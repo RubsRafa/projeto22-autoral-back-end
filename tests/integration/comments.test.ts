@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import httpStatus from 'http-status';
 import { faker } from '@faker-js/faker';
 import * as jwt from 'jsonwebtoken';
-import { bodyComment, bodyDeleteComment, createComment, createPost, createUser, deletePost } from '../factories';
+import { bodyComment, bodyDeleteComment, createComment, createPost, createUser } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
 import app, { init } from '@/app';
 

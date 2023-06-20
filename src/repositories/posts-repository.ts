@@ -150,8 +150,8 @@ export async function deletePost(postId: number) {
   return await prisma.posts.delete({
     where: {
       id: postId,
-    }
-  })
+    },
+  });
 }
 
 const postsRepository = {

@@ -1,5 +1,5 @@
 import { conflictError, notFoundError } from '../errors';
-import { findPostById, findRepostIdByPostId, post, removeRepost, repost } from '../repositories';
+import { findPostById, findRepostIdByPostId, removeRepost, repost } from '../repositories';
 
 export async function addRepostService(userId: number, postId: number) {
   await verifyInfo(postId);

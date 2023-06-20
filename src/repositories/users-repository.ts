@@ -75,21 +75,21 @@ export async function findUserByName(name: string) {
     where: {
       name: {
         startsWith: name,
-        contains: name
-      }
+        contains: name,
+      },
     },
     select: {
       id: true,
       name: true,
       image: true,
-    }
-  })
+    },
+  });
 }
 
 const usersRepository = {
   getUserInfo,
   editUserInfo,
-  findUserByName
+  findUserByName,
 };
 
 export default usersRepository;

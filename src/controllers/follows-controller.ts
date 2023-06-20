@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
 import { findMyFollows, followUser, removeFollowService } from '../services';
-import { AuthenticatedRequest, FollowId, FollowIdUser, JWT } from '../protocols';
+import { AuthenticatedRequest, FollowIdUser, JWT } from '../protocols';
 
 export async function getMyFollows(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const userId = Number(req.params.userId);

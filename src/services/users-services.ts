@@ -49,7 +49,7 @@ export async function findUser(name: string) {
 const usersService = {
   getUserInfoService,
   editUserService,
-  findUser
+  findUser,
 };
 
 export default usersService;

@@ -40,18 +40,18 @@ export async function findFollow(id: number) {
 export async function getMyFollowsInfo(userId: number) {
   return await prisma.follows.findMany({
     where: {
-      userId
+      userId,
     },
     include: {
-      Users_Follows_userIdIFollowToUsers:{
+      Users_Follows_userIdIFollowToUsers: {
         select: {
           id: true,
           name: true,
           image: true,
-        }
-      }
+        },
+      },
     },
-  })
+  });
 }
 
 const followsRepository = {

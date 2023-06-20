@@ -6,4 +6,4 @@ export * from './likes-factory';
 export * from './comments-factory';
 export * from './reposts-factory';
 export * from './users-factory';
-export * from './chat-factory'
+export * from './chat-factory';

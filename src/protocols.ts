@@ -81,9 +81,9 @@ export type PostsReturn = {
     image: string;
     birthday: Date;
   };
-  Likes: (string | number | Date | object)[];
-  Comments: (string | number | Date | object)[];
-  Reposts: (string | number | Date | object)[];
+  Likes: any[];
+  Comments: any[];
+  Reposts: any[];
   repostedById: number;
   repostedByName: string;
   repostedByImage: string;
@@ -108,10 +108,10 @@ export type HealthParams = {
   text?: string;
   color?: string;
   mood?: number;
-}
+};
 
 export type MessagesParams = {
   fromId: number;
   toId: number;
   message: string;
-}
+};

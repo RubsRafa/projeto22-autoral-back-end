@@ -10,7 +10,6 @@ import {
   createFollow,
   createPost,
   createUser,
-  postWithNothing,
 } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
 import app, { init } from '@/app';

@@ -34,8 +34,8 @@ export async function followUser(userId: number, userIdIFollow: number) {
 
   const myFollows = await findMyFollows(userId);
   const follow = myFollows.find((f) => f.userIdIFollow === userIdIFollow);
-  if(follow) throw conflictError();
-  
+  if (follow) throw conflictError();
+
   await createFollow(userId, userIdIFollow);
   return;
 }

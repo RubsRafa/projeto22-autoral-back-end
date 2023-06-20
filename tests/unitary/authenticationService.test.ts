@@ -51,7 +51,7 @@ describe('authService test suite', () => {
       const userSignInParams = returnSignInParams();
 
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockResolvedValue(user);
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): boolean => {
         return true;
       });
 
@@ -66,7 +66,7 @@ describe('authService test suite', () => {
       const hashedPassword = faker.internet.password();
 
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockResolvedValue(undefined);
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): string => {
         return hashedPassword;
       });
 
@@ -80,7 +80,7 @@ describe('authService test suite', () => {
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce((): any => {
         return user;
       });
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): boolean => {
         return false;
       });
 
@@ -99,13 +99,13 @@ describe('authService test suite', () => {
       jest.spyOn(authenticantionRepository, 'findUserEmail').mockImplementationOnce((): any => {
         return user;
       });
-      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): any => {
+      jest.spyOn(bcrypt, 'compare').mockImplementationOnce((): boolean => {
         return true;
       });
       jest.spyOn(jwt, 'sign').mockImplementationOnce((): string => {
         return token;
       });
-      jest.spyOn(authenticantionRepository, 'createSession').mockImplementationOnce((): any => {
+      jest.spyOn(authenticantionRepository, 'createSession').mockImplementationOnce((): undefined => {
         return;
       });
 

@@ -50,8 +50,8 @@ export async function getPostsService(userId: number) {
   const results: PostsReturn[] = allInfo.concat(posts);
   const myFollows = await getAllFollows(userId);
   const filterPostsFromFollows: PostsReturn[] = [];
-  const postIdsOthers: number[]= [];
-  
+  const postIdsOthers: number[] = [];
+
   const onlyMyPostsAndReposts: PostsReturn[] = [];
   // const postIdsMine: number[]= [];
 
@@ -69,10 +69,7 @@ export async function getPostsService(userId: number) {
       for (let x = 0; x < results.length; x++) {
         const post = results[x];
 
-        if (
-          post.userId === follows.userIdIFollow ||
-          (post.isReposted && post.repostedById === follows.userIdIFollow)
-        ) {
+        if (post.userId === follows.userIdIFollow || (post.isReposted && post.repostedById === follows.userIdIFollow)) {
           if (!postIdsOthers.includes(post.id)) {
             filterPostsFromFollows.push(post);
             postIdsOthers.push(post.id);

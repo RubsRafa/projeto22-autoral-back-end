@@ -1,6 +1,6 @@
-import { addHumor, changeHumorItem, deleteHumorItem, getUserHumorDiary } from "../controllers";
-import { authenticateToken } from "../middlewares";
-import { Router } from "express";
+import { Router } from 'express';
+import { addHumor, changeHumorItem, deleteHumorItem, getUserHumorDiary } from '../controllers';
+import { authenticateToken } from '../middlewares';
 
 const healthRouter = Router();
 
@@ -9,6 +9,6 @@ healthRouter
   .get('/', getUserHumorDiary)
   .post('/', addHumor)
   .put('/', changeHumorItem)
-  .delete('/:id', deleteHumorItem)
+  .delete('/:id', deleteHumorItem);
 
-export { healthRouter};
+export { healthRouter };

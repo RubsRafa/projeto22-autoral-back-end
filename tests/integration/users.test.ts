@@ -58,7 +58,15 @@ describe('GET /users/:userId', () => {
       const token = await generateValidToken(user);
       const otherUser = await createUser();
 
-      const rseponse = await server.get(`/users/${otherUser.id}`).set('Authorization', `Bearer ${token}`);
+      const response = await server.get(`/users/${otherUser.id}`).set('Authorization', `Bearer ${token}`);
+      expect(response.status).toBe(httpStatus.OK);
+      expect(response.body).toEqual({
+        id: otherUser.id,
+        image: otherUser.image,
+        name: otherUser.name,
+        birthday: otherUser.birthday,
+        email: otherUser.email,
+      });
     });
   });
 });

@@ -1,12 +1,5 @@
 import { jest } from '@jest/globals';
-import {
-  returnFollows,
-  returnGetPosts,
-  returnGetReposts,
-  returnReposts,
-  returnUserBody,
-  returnUserExist,
-} from '../factories';
+import { returnFollows, returnGetPosts, returnGetReposts, returnReposts, returnUserExist } from '../factories';
 import postsRepository from '@/repositories/posts-repository';
 import repostsRepository from '@/repositories/reposts-repository';
 import postsService from '@/services/posts-services';
