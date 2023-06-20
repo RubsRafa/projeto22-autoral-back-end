@@ -14,17 +14,17 @@ import { badRequestError, conflictError, notFoundUserError } from '../errors';
 
 export async function getPostsService(userId: number) {
   const posts = await getAllPosts();
-  const reposts = await getAllReposts();
+  const allReposts = await getAllReposts();
 
-  const allInfo: PostsReturn[] = [];
+  const reposts: PostsReturn[] = [];
 
-  for (let i = 0; i < reposts.length; i++) {
-    const repost = reposts[i];
+  for (let i = 0; i < allReposts.length; i++) {
+    const repost = allReposts[i];
 
     for (let x = 0; x < posts.length; x++) {
       const post = posts[x];
       if (post.id === repost.postId) {
-        allInfo.push({
+        reposts.push({
           id: post.id,
           userId: post.Users.id,
           type: post.PostType.id,
@@ -36,31 +36,27 @@ export async function getPostsService(userId: number) {
           updatedAt: repost.updatedAt,
           PostType: post.PostType,
           Users: post.Users,
-          Likes: post.Likes,
-          Comments: post.Comments,
-          Reposts: post.Reposts,
           repostedById: repost.userId,
           repostedByName: repost.Users.name,
           repostedByImage: repost.Users.image,
-        });
+        })
       }
     }
   }
 
-  const results: PostsReturn[] = allInfo.concat(posts);
+  const results: PostsReturn[] = reposts.concat(posts);
   const myFollows = await getAllFollows(userId);
-  const filterPostsFromFollows: PostsReturn[] = [];
-  const postIdsOthers: number[] = [];
 
-  const onlyMyPostsAndReposts: PostsReturn[] = [];
-  // const postIdsMine: number[]= [];
+  const myPosts: PostsReturn[] = [];
 
   for (let i = 0; i < results.length; i++) {
     const post = results[i];
-    if (post.userId === userId || (post.isReposted && post.repostedById === userId)) {
-      onlyMyPostsAndReposts.push(post);
+    if ((post.userId === userId && !post.isReposted) || (post.userId !== userId && post.isReposted && post.repostedById === userId)) {
+      myPosts.push(post);
     }
   }
+
+  const filterPostsFromFollows: PostsReturn[] = [];
 
   if (myFollows.length !== 0) {
     for (let i = 0; i < myFollows.length; i++) {
@@ -69,17 +65,15 @@ export async function getPostsService(userId: number) {
       for (let x = 0; x < results.length; x++) {
         const post = results[x];
 
-        if (post.userId === follows.userIdIFollow || (post.isReposted && post.repostedById === follows.userIdIFollow)) {
-          if (!postIdsOthers.includes(post.id)) {
-            filterPostsFromFollows.push(post);
-            postIdsOthers.push(post.id);
-          }
+        if ((post.userId === follows.userIdIFollow && !post.isReposted) || (post.isReposted && post.repostedById === follows.userIdIFollow)) {
+
+          filterPostsFromFollows.push(post);
         }
       }
     }
   }
 
-  const finalResults = onlyMyPostsAndReposts.concat(filterPostsFromFollows);
+  const finalResults = [...myPosts, ...filterPostsFromFollows]
 
   finalResults.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
 
@@ -128,9 +122,6 @@ export async function getUserAllPosts(userId: number) {
           updatedAt: repost.updatedAt,
           PostType: post.PostType,
           Users: post.Users,
-          Likes: post.Likes,
-          Comments: post.Comments,
-          Reposts: post.Reposts,
           repostedById: repost.userId,
           repostedByName: repost.Users.name,
           repostedByImage: repost.Users.image,

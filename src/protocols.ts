@@ -1,4 +1,4 @@
-import { Posts, Users } from '@prisma/client';
+import { Users } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 
 export type Error = {
@@ -21,7 +21,12 @@ export type SignInParams = {
 
 export type UserType = Users;
 
-export type PostParams = Omit<Posts, 'id' | 'userId' | 'createdAt' | 'updatedAt'>;
+export type PostParams = {
+  type: number;
+  video?: string;
+  image?: string;
+  text?: string;
+}
 
 export type PostId = {
   postId: number;
@@ -79,11 +84,7 @@ export type PostsReturn = {
     id: number;
     name: string;
     image: string;
-    birthday: Date;
   };
-  Likes: any[];
-  Comments: any[];
-  Reposts: any[];
   repostedById: number;
   repostedByName: string;
   repostedByImage: string;
