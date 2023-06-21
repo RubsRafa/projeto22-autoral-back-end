@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Chat, Users } from '@prisma/client';
 import { MessagesParams } from '@/protocols';
+import { prisma } from '@/config';
 
 export function chatReturn(user: Users, otherUser: Users): Chat {
   return {
@@ -36,4 +37,21 @@ export function returnMessages(user: Users, otherUser: Users) {
       image: otherUser.image,
     },
   };
+}
+
+export async function createUserMessages(user: Users, otherUser: Users) {
+  return await prisma.chat.create({
+    data: {
+      fromId: user.id,
+      toId: otherUser.id,
+      message: faker.word.words(),
+    }
+  })
+}
+
+export function returnBodySendMessage(user: Users) {
+  return {
+    toId: user.id,
+    message: faker.word.words(),
+  }
 }
