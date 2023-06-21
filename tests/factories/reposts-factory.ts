@@ -32,6 +32,17 @@ export function returnReposts(otherUser: Users, post: PostsReturn): RepostReturn
     },
   };
 }
+
+export function returnOnlyReposts(user: Users, post: Posts) {
+  return {
+    id: faker.number.int({ max: 50 }),
+    userId: user.id,
+    postId: post.id,
+    createdAt: faker.date.anytime(),
+    updatedAt: faker.date.anytime(),
+  }
+}
+
 export function returnGetReposts(post: PostsReturn, repost: RepostReturn): PostsReturn {
   return {
     id: post.id,
