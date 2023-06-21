@@ -24,3 +24,34 @@ export function bodyDeleteComment(comment: Comments) {
     commentId: comment.id,
   };
 }
+
+export function returnComment() {
+  return faker.word.words()
+}
+
+export function returnCommentItem(user: Users, post:Posts, comment: string) {
+  return {
+    id: faker.number.int({ max: 50 }),
+    comment,
+    userId: user.id,
+    postId: post.id,
+    createdAt: faker.date.anytime(),
+    updatedAt: faker.date.anytime(),
+  }
+}
+
+export function returnCommentsWithUsers(){
+  return {
+    id: faker.number.int({ max: 50 }),
+    comment: faker.word.words(),
+    userId: faker.number.int({ max: 50 }),
+    postId: faker.number.int({ max: 50 }),
+    createdAt: faker.date.anytime(),
+    updatedAt: faker.date.anytime(),
+    Users: {
+      id: faker.number.int({ max: 50 }),
+      name: faker.internet.userName(),
+      image: faker.internet.avatar(),
+    }
+  }
+}

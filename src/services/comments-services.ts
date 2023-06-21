@@ -12,7 +12,7 @@ export async function removeCommentService(userId: number, commentId: number) {
   const commentPost = await findComment(commentId);
   if (!commentPost) throw notFoundError();
 
-  verifyInfo(commentPost.postId);
+  await verifyInfo(commentPost.postId);
   if (commentPost.userId !== userId) throw conflictError();
 
   await removeComment(commentId);
