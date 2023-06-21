@@ -52,3 +52,33 @@ export async function findUserInfo(user: Users) {
     },
   });
 }
+
+export function returnUserInfo() {
+  return {
+    id: faker.number.int({ max: 50 }),
+    name: faker.internet.userName(),
+    image: faker.internet.avatar(),
+    email: faker.internet.email(),
+    birthday: faker.date.anytime(),
+  }
+}
+
+export function passWordButNoConfirm() {
+  return {
+    password: faker.internet.password(),
+  }
+}
+
+export function confirmButNoPassword() {
+  return {
+    confirmPassword: faker.internet.password(),
+  }
+}
+
+export function returnFoundedUser() {
+  return {
+    id: faker.number.int({ max: 50 }),
+    name: faker.internet.userName(),
+    image: faker.internet.avatar(),
+  }
+}
