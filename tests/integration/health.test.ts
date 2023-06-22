@@ -98,3 +98,25 @@ describe('PUT /mental-health', () => {
     })
   })
 })
+
+describe('DELETE /mental-health/:id', () => {
+  describe('when token is valid', () => {
+    it('should not delete humor if humor does not exist', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      
+      const response = await server.delete(`/mental-health/${0}`).set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(httpStatus.CONFLICT);
+    })
+    it('should delete user hurmo', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      const humor = await createHumorDiary(user);
+
+      const response = await server.delete(`/mental-health/${humor.id}`).set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(httpStatus.OK);
+    })
+  })
+})
