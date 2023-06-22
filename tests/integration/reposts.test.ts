@@ -70,16 +70,16 @@ describe('POST /repost', () => {
   });
 });
 
-describe('DELETE /repost', () => {
+describe('DELETE /repost/:postId', () => {
   it('should respond with status 401 if no token is given', async () => {
-    const response = await server.delete(`/repost`);
+    const response = await server.delete(`/repost/0`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
   it('should respond with status 401 if given token is not valid', async () => {
     const token = faker.lorem.word();
 
-    const response = await server.delete(`/repost`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/repost/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -87,7 +87,7 @@ describe('DELETE /repost', () => {
     const userWithoutSession = await createUser();
     const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
-    const response = await server.delete(`/repost`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/repost/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -96,7 +96,7 @@ describe('DELETE /repost', () => {
       const user = await createUser();
       const token = await generateValidToken(user);
 
-      const response = await server.delete('/repost').set('Authorization', `Bearer ${token}`);
+      const response = await server.delete(`/repost/0`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
     it('should respond with status 409 if user has no repost to remove', async () => {
@@ -104,9 +104,8 @@ describe('DELETE /repost', () => {
       const otherUser = await createUser();
       const token = await generateValidToken(user);
       const post = await createPost(otherUser, 1);
-      const body = bodyRepost(post);
 
-      const response = await server.delete('/repost').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/repost/${post.id}`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.CONFLICT);
     });
     it('should respond with status 200 if repost was removed', async () => {
@@ -115,9 +114,8 @@ describe('DELETE /repost', () => {
       const token = await generateValidToken(user);
       const post = await createPost(otherUser, 1);
       await createRepost(user, post);
-      const body = bodyRepost(post);
 
-      const response = await server.delete('/repost').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/repost/${post.id}`).set('Authorization', `Bearer ${token}`)
       expect(response.status).toBe(httpStatus.OK);
     });
   });
