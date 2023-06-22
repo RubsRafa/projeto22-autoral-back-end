@@ -184,6 +184,14 @@ describe('chatService test suite', () => {
             user: messages.Chat_fromIdToUsers,
             message: messages.message,
           },
+          {
+            user: {
+              id: followerUser.id,
+              name: followerUser.name,
+              image: followerUser.image,
+            },
+            message: null,
+          }
         ]),
       );
     });
