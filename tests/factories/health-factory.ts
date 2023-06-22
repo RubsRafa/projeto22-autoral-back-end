@@ -1,3 +1,4 @@
+import { prisma } from '@/config';
 import { faker } from '@faker-js/faker';
 import { Health, Users } from '@prisma/client';
 
@@ -19,4 +20,15 @@ export function returnChangeHumor(user: Users) {
     color: faker.color.rgb(),
     mood: 4,
   };
+}
+
+export async function createHumorDiary(user: Users) {
+  return await prisma.health.create({
+    data: {
+      userId: user.id,
+      mood: faker.number.int({ max: 5 }),
+      text: faker.word.words(),
+      color: faker.color.rgb(),
+    }
+  })
 }

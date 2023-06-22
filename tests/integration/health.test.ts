@@ -1,6 +1,11 @@
 import httpStatus from 'http-status';
 import supertest from 'supertest';
 import app, { init } from '@/app';
+import { createUser } from '../factories';
+import { generateValidToken } from '../helpers';
+import { createHumorDiary } from '../factories/health-factory';
+import { any } from 'joi';
+import { Health } from '@prisma/client';
 
 beforeAll(async () => {
   await init();
@@ -16,3 +21,40 @@ describe('GET /heatlh', () => {
     expect(response.text).toBe('OK!');
   });
 });
+
+describe('GET /mental-health', () => {
+  describe('when token is valid', () => {
+    it('should respond with status 200 and user diary info', async () => {
+       const user = await createUser();
+       const token = await generateValidToken(user);
+       const humor = await createHumorDiary(user);
+
+       const response = await server.get('/mental-health').set('Authorization', `Bearer ${token}`);
+       expect(response.status).toBe(httpStatus.OK);
+       expect(response.body).toStrictEqual([
+        {
+          id: humor.id,
+          mood: humor.mood,
+          color: humor.color,
+          text: humor.text,
+          userId: humor.userId,
+          date: expect.any(String),
+        }
+       ]);
+    })
+    it('should respond with status 200 and user diary info in order', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      const humor = await createHumorDiary(user);
+      const otherHumor = await createHumorDiary(user);
+      const diary = [humor, otherHumor];
+
+      const response = await server.get('/mental-health').set('Authorization', `Bearer ${token}`);
+      const responseBody = response.body.map((entry: Health) => ({ ... entry, date: expect.any(String) }))
+      diary.sort((a, b) => b.date.getTime() - a.date.getTime());
+      
+      expect(response.status).toBe(httpStatus.OK);
+      expect(response.body).toEqual(responseBody)
+   })
+  })
+}) 
