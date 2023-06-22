@@ -108,16 +108,16 @@ describe('POST /follow', () => {
   });
 });
 
-describe('DELETE /follow', () => {
+describe('DELETE /follow/:followId', () => {
   it('should respond with status 401 if no token is given', async () => {
-    const response = await server.delete(`/follow`);
+    const response = await server.delete(`/follow/0`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
   it('should respond with status 401 if given token is not valid', async () => {
     const token = faker.lorem.word();
 
-    const response = await server.delete(`/follow`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/follow/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -125,7 +125,7 @@ describe('DELETE /follow', () => {
     const userWithoutSession = await createUser();
     const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
-    const response = await server.delete(`/follow`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/follow/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -133,9 +133,8 @@ describe('DELETE /follow', () => {
     it('should respond with status 404 if user follow does not exist', async () => {
       const user = await createUser();
       const token = await generateValidToken(user);
-      const body = { followId: 0 };
 
-      const response = await server.delete('/follow').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/follow/0`).set('Authorization', `Bearer ${token}`)
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
     it('should respond with status 200 and add follow', async () => {
@@ -143,9 +142,8 @@ describe('DELETE /follow', () => {
       const token = await generateValidToken(user);
       const otherUser = await createUser();
       const follow = await createFollow(user, otherUser);
-      const body = bodyDeleteFollow(follow);
 
-      const response = await server.delete(`/follow`).set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/follow/${follow.id}`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toEqual(httpStatus.OK);
     });
   });
