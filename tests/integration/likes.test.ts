@@ -176,16 +176,16 @@ describe('POST /like', () => {
   });
 });
 
-describe('DELETE /like', () => {
+describe('DELETE /like/:postId', () => {
   it('should respond with status 401 if no token is given', async () => {
-    const response = await server.delete(`/like`);
+    const response = await server.delete(`/like/0`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
   it('should respond with status 401 if given token is not valid', async () => {
     const token = faker.lorem.word();
 
-    const response = await server.delete(`/like`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/like/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -193,7 +193,7 @@ describe('DELETE /like', () => {
     const userWithoutSession = await createUser();
     const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
-    const response = await server.delete(`/like`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/like/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -202,7 +202,7 @@ describe('DELETE /like', () => {
       const user = await createUser();
       const token = await generateValidToken(user);
 
-      const response = await server.delete('/like').set('Authorization', `Bearer ${token}`);
+      const response = await server.delete(`/like/0`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
     it('should respond with status 409 if post was not liked', async () => {
@@ -211,9 +211,8 @@ describe('DELETE /like', () => {
       const token = await generateValidToken(user);
       const post = await createPost(otherUser, 1);
       await createLike(otherUser, post);
-      const body = bodyLike(post);
 
-      const response = await server.delete('/like').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/like/${post.id}`).set('Authorization', `Bearer ${token}`)
       expect(response.status).toBe(httpStatus.CONFLICT);
     });
     it('should respond with status 200 if like was removed', async () => {
@@ -223,7 +222,7 @@ describe('DELETE /like', () => {
       const post = await createPost(otherUser, 1);
       await createLike(user, post);
 
-      const response = await server.delete('/like').set('Authorization', `Bearer ${token}`).send({ postId: post.id });
+      const response = await server.delete(`/like/${post.id}`).set('Authorization', `Bearer ${token}`).send({ postId: post.id });
 
       expect(response.status).toBe(httpStatus.OK);
       const like = await findLikeByUserAndPost(user, post);
