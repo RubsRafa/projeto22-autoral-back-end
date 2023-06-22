@@ -3,7 +3,7 @@ import supertest from 'supertest';
 import app, { init } from '@/app';
 import { createUser } from '../factories';
 import { generateValidToken } from '../helpers';
-import { createHumorDiary, returnHealthParams } from '../factories/health-factory';
+import { createHumorDiary, returnBodyWithInvalidHumor, returnChangeHealthParams, returnHealthParams } from '../factories/health-factory';
 import { any } from 'joi';
 import { Health } from '@prisma/client';
 
@@ -74,3 +74,27 @@ describe('POST /mental-health', () => {
   })
 })
 
+describe('PUT /mental-health', () => {
+  describe('when token is valid', () => {
+    it('should not edit user humor if humor does not exist', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      const body = returnBodyWithInvalidHumor();
+
+      const response = await server.put('/mental-health').set('Authorization', `Bearer ${token}`).send(body);
+
+      expect(response.status).toBe(httpStatus.CONFLICT);
+    });
+    it('should edit user humor', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      const humor = await createHumorDiary(user);
+      const body = returnChangeHealthParams(humor);
+
+      const response = await server.put('/mental-health').set('Authorization', `Bearer ${token}`).send(body);
+
+      expect(response.status).toBe(httpStatus.OK);
+      expect(response.body).toEqual({});
+    })
+  })
+})

@@ -40,3 +40,21 @@ export function returnHealthParams() {
     mood: faker.number.int({ max: 5 }),
   }
 }
+
+export function returnChangeHealthParams(humor?: Health) {
+  return {
+    id: humor.id | 0,
+    text: faker.word.words(),
+    color: faker.color.rgb(),
+    mood: faker.number.int({ max: 5 }),
+  }
+}
+
+export function returnBodyWithInvalidHumor() {
+  return {
+    id: 0,
+    text: faker.word.words(),
+    color: faker.color.rgb(),
+    mood: faker.number.int({ max: 5 }),
+  }
+}
