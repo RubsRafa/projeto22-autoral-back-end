@@ -116,16 +116,16 @@ describe('POST /comment', () => {
   });
 });
 
-describe('DELETE /comment', () => {
+describe('DELETE /comment/:commentId', () => {
   it('should respond with status 401 if no token is given', async () => {
-    const response = await server.delete(`/comment`);
+    const response = await server.delete(`/comment/0`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
   it('should respond with status 401 if given token is not valid', async () => {
     const token = faker.lorem.word();
 
-    const response = await server.delete(`/comment`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/comment/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -133,7 +133,7 @@ describe('DELETE /comment', () => {
     const userWithoutSession = await createUser();
     const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
-    const response = await server.delete(`/comment`).set('Authorization', `Bearer ${token}`);
+    const response = await server.delete(`/comment/0`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -143,9 +143,8 @@ describe('DELETE /comment', () => {
       const token = await generateValidToken(user);
       const otherUser = await createUser();
       await createPost(otherUser, 1);
-      const body = { commentId: 0 };
 
-      const response = await server.delete('/comment').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/comment/0`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
     it('should respond with status 404 if comment id does not exist', async () => {
@@ -153,9 +152,8 @@ describe('DELETE /comment', () => {
       const token = await generateValidToken(user);
       const otherUser = await createUser();
       await createPost(otherUser, 1);
-      const body = { commentId: 0 };
 
-      const response = await server.delete('/comment').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/comment/0`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
     it('should respond with status 409 if user does not own comment', async () => {
@@ -164,9 +162,8 @@ describe('DELETE /comment', () => {
       const otherUser = await createUser();
       const post = await createPost(otherUser, 1);
       const comment = await createComment(otherUser, post);
-      const body = bodyDeleteComment(comment);
 
-      const response = await server.delete('/comment').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/comment/${comment.id}`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.CONFLICT);
     });
     it('should respond with status 200 if comment was removed', async () => {
@@ -177,7 +174,7 @@ describe('DELETE /comment', () => {
       const comment = await createComment(user, post);
       const body = bodyDeleteComment(comment);
 
-      const response = await server.delete('/comment').set('Authorization', `Bearer ${token}`).send(body);
+      const response = await server.delete(`/comment/${comment.id}`).set('Authorization', `Bearer ${token}`).send(body);
       expect(response.status).toBe(httpStatus.OK);
     });
   });
