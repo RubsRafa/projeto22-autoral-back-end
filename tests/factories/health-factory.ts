@@ -32,3 +32,11 @@ export async function createHumorDiary(user: Users) {
     }
   })
 }
+
+export function returnHealthParams() {
+  return {
+    text: faker.word.words(),
+    color: faker.color.rgb(),
+    mood: faker.number.int({ max: 5 }),
+  }
+}

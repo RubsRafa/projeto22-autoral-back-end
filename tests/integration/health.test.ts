@@ -3,7 +3,7 @@ import supertest from 'supertest';
 import app, { init } from '@/app';
 import { createUser } from '../factories';
 import { generateValidToken } from '../helpers';
-import { createHumorDiary } from '../factories/health-factory';
+import { createHumorDiary, returnHealthParams } from '../factories/health-factory';
 import { any } from 'joi';
 import { Health } from '@prisma/client';
 
@@ -58,3 +58,19 @@ describe('GET /mental-health', () => {
    })
   })
 }) 
+
+describe('POST /mental-health', () => {
+  describe('when token is valid', () => {
+    it('should create user hurmo', async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
+      const body = returnHealthParams();
+
+      const response = await server.post('/mental-health').set('Authorization', `Bearer ${token}`).send(body);
+
+      expect(response.status).toBe(httpStatus.OK);
+      expect(response.body).toStrictEqual({})
+    })
+  })
+})
+
