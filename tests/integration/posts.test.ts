@@ -64,7 +64,7 @@ describe('GET /posts', () => {
       const response = await server.get('/posts').set('Authorization', `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.OK);
       expect(response.body).toStrictEqual([
-        expect.objectContaining({
+        {
           id: post.id,
           userId: user.id,
           type: post.type,
@@ -76,21 +76,17 @@ describe('GET /posts', () => {
           updatedAt: expect.any(String),
           PostType: {
             id: 1,
-            type: expect.any(String),
+            type: 'Text',
           },
           Users: {
             id: user.id,
             name: user.name,
             image: user.image,
-            birthday: user.birthday,
           },
-          Likes: [],
-          Comments: [],
-          Reposts: [],
           repostedById: null,
           repostedByName: null,
           repostedByImage: null,
-        }),
+        },
       ]);
     });
     it('should respond with status 200 and post from follower', async () => {
@@ -121,11 +117,7 @@ describe('GET /posts', () => {
             id: userIFollow.id,
             name: userIFollow.name,
             image: userIFollow.image,
-            birthday: userIFollow.birthday,
           },
-          Likes: [],
-          Comments: [],
-          Reposts: [],
           repostedById: null,
           repostedByName: null,
           repostedByImage: null,
@@ -202,7 +194,6 @@ describe('GET /posts/user/:userId', () => {
             id: findUser.id,
             name: findUser.name,
             image: findUser.image,
-            birthday: findUser.birthday,
           },
           repostedById: null,
           repostedByName: null,
